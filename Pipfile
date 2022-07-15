@@ -10,6 +10,7 @@ django-cors-headers = "*"
 python-dotenv = "*"
 gunicorn = "*"
 black = "*"
+fire = "*"
 
 [dev-packages]
 

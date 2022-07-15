@@ -1,4 +1,6 @@
 *__pycache__
+*.code-workspace
 *.csv
 *.env
+*.json
 *db.sqlite3
