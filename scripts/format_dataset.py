@@ -13,6 +13,7 @@ import uuid
 
 load_dotenv(".env")
 
+
 def format(name):
     dataset = read_json(name)
 
@@ -38,6 +39,7 @@ def format(name):
 
     return "Successfully created seed file"
 
+
 def create_json(datalist):
     timestamp = str(datetime.now())
     pattern = "[" + "".join([":", " ", "-", "."]) + "]"
@@ -47,6 +49,7 @@ def create_json(datalist):
 
     f.write(json.dumps(datalist, indent=2))
     f.close()
+
 
 def read_json(name):
     f = open(f"{name}.json")

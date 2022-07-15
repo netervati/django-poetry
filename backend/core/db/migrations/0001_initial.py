@@ -15,17 +15,31 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Poem',
+            name="Poem",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('age', models.CharField(max_length=100)),
-                ('author', models.CharField(max_length=100)),
-                ('content', models.TextField()),
-                ('title', models.CharField(max_length=100)),
-                ('type', models.CharField(max_length=100)),
-                ('created_on', models.DateTimeField(auto_now_add=True)),
-                ('updated_on', models.DateField(auto_now=True)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("age", models.CharField(max_length=100)),
+                ("author", models.CharField(max_length=100)),
+                ("content", models.TextField()),
+                ("title", models.CharField(max_length=100)),
+                ("type", models.CharField(max_length=100)),
+                ("created_on", models.DateTimeField(auto_now_add=True)),
+                ("updated_on", models.DateField(auto_now=True)),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]

@@ -10,7 +10,7 @@ MAX_LENGTH = 100
 
 
 class Poem(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False),
+    id = (models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False),)
     age = models.CharField(max_length=MAX_LENGTH)
     author = models.CharField(max_length=MAX_LENGTH)
     content = models.TextField()
