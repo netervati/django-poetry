@@ -2,14 +2,15 @@ from argparse import ONE_OR_MORE
 from tkinter import CASCADE
 from django.contrib.auth.models import User
 from django.db import models
-from uuid import uuid4
+
+import uuid
 
 
 MAX_LENGTH = 100
 
 
 class Poem(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid4, editable=False),
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False),
     age = models.CharField(max_length=MAX_LENGTH)
     author = models.CharField(max_length=MAX_LENGTH)
     content = models.TextField()
