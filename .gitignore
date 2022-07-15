@@ -1,0 +1,4 @@
+*__pycache__
+*.csv
+*.env
+*db.sqlite3

@@ -1,0 +1,24 @@
+name: black
+
+on: [push]
+
+env:
+  DJANGO_DB: ${{ secrets.DJANGO_DB }}
+  DJANGO_DEBUG: ${{ secrets.DJANGO_DEBUG }}
+  DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+
+jobs:
+  formatter:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9"]
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: psf/black@stable
+        with:
+          options: "--check"
+          src: "./backend/core"
+          version: "22.6.0"
