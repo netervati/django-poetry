@@ -1,5 +1,3 @@
-from argparse import ONE_OR_MORE
-from tkinter import CASCADE
 from django.contrib.auth.models import User
 from django.db import models
 
