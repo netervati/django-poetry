@@ -1,4 +1,4 @@
-from .services import RetrievePoem
+from .services import RetrievePoemsExactService
 
 
 from api.serializers import PoemSerializer
@@ -11,13 +11,13 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
 
-class PoemViewset(ViewSet):
+class PoemController(ViewSet):
     def retrieve(self, request):
-        result = RetrievePoem(request).run()
+        result = RetrievePoemsExactService(request).run()
 
         return Response(PoemSerializer(result, many=True).data)
 
 
 urlpatterns = [
-    path("", PoemViewset.as_view({"get": "retrieve"})),
+    path("", PoemController.as_view({"get": "retrieve"})),
 ]
