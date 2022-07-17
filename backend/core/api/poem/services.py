@@ -1,13 +1,10 @@
 """
 Retrieves the poems based exactly on the query parameters.
 """
-
-from db.models import Poem
-
-
 from rest_framework.exceptions import ValidationError
 
 
+from db.models import Poem
 from lib.utils import clean_params
 
 

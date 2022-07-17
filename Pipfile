@@ -11,6 +11,8 @@ python-dotenv = "*"
 gunicorn = "*"
 black = "*"
 fire = "*"
+pytest-django = "*"
+faker = "*"
 
 [dev-packages]
 

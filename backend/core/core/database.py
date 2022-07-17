@@ -5,8 +5,6 @@ Sqlite is used for development purposes only.
 """
 
 from dotenv import load_dotenv
-
-
 import os
 
 

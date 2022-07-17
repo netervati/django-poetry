@@ -1,7 +1,7 @@
-from db.models import Poem
-
-
 from rest_framework import serializers
+
+
+from db.models import Poem
 
 
 class DynamicFieldsModelSerializer(serializers.ModelSerializer):

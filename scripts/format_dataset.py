@@ -2,8 +2,6 @@
 
 from datetime import date, datetime
 from dotenv import load_dotenv
-
-
 import fire
 import json
 import os
