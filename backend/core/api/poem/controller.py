@@ -19,5 +19,5 @@ class PoemController(ViewSet):
 
 
 urlpatterns = [
-    path("", PoemController.as_view({"get": "retrieve"})),
+    path("", PoemController.as_view({"get": "retrieve"}), name="get-poems"),
 ]
