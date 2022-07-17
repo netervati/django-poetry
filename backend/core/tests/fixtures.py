@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 
 
-from db.models import Poem
+from db.models import Age, Author, Poem, Type
 
 
 import pytest
@@ -13,6 +13,22 @@ def user(faker):
 
 
 @pytest.fixture
+def age(user, faker):
+    return Age.objects.create(
+        name=faker.company_suffix(),
+        user=user,
+    )
+
+
+@pytest.fixture
+def author(user, faker):
+    return Author.objects.create(
+        name=faker.name(),
+        user=user,
+    )
+
+
+@pytest.fixture
 def poem(user, faker):
     return Poem.objects.create(
         age=faker.company_suffix(),
@@ -20,5 +36,13 @@ def poem(user, faker):
         content=faker.text(),
         title=faker.catch_phrase(),
         type=faker.company_suffix(),
+        user=user,
+    )
+
+
+@pytest.fixture
+def type(user, faker):
+    return Type.objects.create(
+        name=faker.company_suffix(),
         user=user,
     )
