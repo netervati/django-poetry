@@ -8,10 +8,12 @@ from django.urls import reverse
 import pytest
 
 
+retrieve_poems_url = reverse("retrieve-poems")
+
+
 @pytest.mark.django_db
 def test_retrieve_poems_with_missing_params(client):
-    url = reverse("get-poems")
-    response = client.get(url)
+    response = client.get(retrieve_poems_url)
 
     assert response.status_code == 400
     assert response.data["errors"] == ["You are missing valid query parameters."]
@@ -19,8 +21,7 @@ def test_retrieve_poems_with_missing_params(client):
 
 @pytest.mark.django_db
 def test_retrieve_poems_with_blank_params(client):
-    url = reverse("get-poems")
-    response = client.get(url, data={"title": ""})
+    response = client.get(retrieve_poems_url, data={"title": ""})
 
     assert response.status_code == 400
     assert response.data["errors"][0]["title"] == "Parameter should not be blank."
@@ -28,8 +29,7 @@ def test_retrieve_poems_with_blank_params(client):
 
 @pytest.mark.django_db
 def test_retrieve_poems(client, poem):
-    url = reverse("get-poems")
-    response = client.get(url, data={"title": poem.title})
+    response = client.get(retrieve_poems_url, data={"title": poem.title})
 
     assert response.status_code == 200
     assert isinstance(response.data, list)
