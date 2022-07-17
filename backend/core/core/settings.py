@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
     "db.apps.DbConfig",
+    "api.apps.ApiConfig",
 ]
 
 MIDDLEWARE = [
