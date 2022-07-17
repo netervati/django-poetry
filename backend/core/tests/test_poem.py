@@ -9,6 +9,24 @@ import pytest
 
 
 @pytest.mark.django_db
+def test_retrieve_poems_with_missing_params(client):
+    url = reverse("get-poems")
+    response = client.get(url)
+
+    assert response.status_code == 400
+    assert response.data['errors'] == ['You are missing valid query parameters.']
+
+
+@pytest.mark.django_db
+def test_retrieve_poems_with_blank_params(client):
+    url = reverse("get-poems")
+    response = client.get(url, data={"title": ''})
+
+    assert response.status_code == 400
+    assert response.data['errors'][0]['title'] == 'Parameter should not be blank.'
+
+
+@pytest.mark.django_db
 def test_retrieve_poems(client, poem):
     url = reverse("get-poems")
     response = client.get(url, data={"title": poem.title})
