@@ -6,8 +6,8 @@ import pytest
 
 
 @pytest.fixture
-def user():
-    return User.objects.create_user("john", "lennon@thebeatles.com", "johnpassword")
+def user(faker):
+    return User.objects.create_user(faker.name(), faker.email(), faker.bs())
 
 
 @pytest.fixture
