@@ -1,4 +1,9 @@
-from api.serializers import AgeSerializer, AuthorSerializer, PoemSerializer, TypeSerializer
+from api.serializers import (
+    AgeSerializer,
+    AuthorSerializer,
+    PoemSerializer,
+    TypeSerializer,
+)
 from tests.fixtures import age, author, poem, type, user
 
 
