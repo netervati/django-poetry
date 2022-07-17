@@ -1,14 +1,10 @@
-from .services import RetrievePoemsExactService
-
-
-from api.serializers import PoemSerializer
-
-
 from django.urls import path
-
-
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
+
+
+from api.poem.services import RetrievePoemsExactService
+from api.serializers import PoemSerializer
 
 
 class PoemController(ViewSet):

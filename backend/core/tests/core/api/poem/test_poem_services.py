@@ -1,6 +1,4 @@
 from django.urls import reverse
-
-
 from rest_framework.status import (
     HTTP_200_OK,
     HTTP_400_BAD_REQUEST,
@@ -14,7 +12,6 @@ import pytest
 
 
 retrieve_poems_url = reverse("retrieve-poems")
-
 
 
 @pytest.mark.django_db

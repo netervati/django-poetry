@@ -1,5 +1,7 @@
-from db.models import Poem
 from django.contrib.auth.models import User
+
+
+from db.models import Poem
 
 
 import pytest

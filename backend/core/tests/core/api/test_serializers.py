@@ -1,6 +1,4 @@
 from api.serializers import PoemSerializer
-
-
 from tests.fixtures import poem, user
 
 
