@@ -50,7 +50,6 @@ class RetrievePoemsLikeService:
 
         return Poem.objects.filter(**self.__like_params())
 
-    # TO-DO feat_v1.0002: Create validation layer
     def __validate_params(self):
         errors = []
         if len(self.params) == 0:

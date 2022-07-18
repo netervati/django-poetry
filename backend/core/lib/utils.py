@@ -8,6 +8,12 @@ def clean_params(kwargs, model):
 
     for key, val in kwargs.items():
         if key in model().__dict__:
-            params[key] = val
+            if (
+                key != "id"
+                and key != "created_at"
+                and key != "updated_at"
+                and key != "user_id"
+            ):
+                params[key] = val
 
     return params
