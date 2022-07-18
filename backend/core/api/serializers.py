@@ -36,7 +36,7 @@ class PoemSerializer(DynamicFieldsModelSerializer):
     class Meta:
         model = Poem
 
-        fields = ["age", "author", "content", "title", "type"]
+        fields = ["id", "age", "author", "content", "title", "type"]
 
 
 class TypeSerializer(DynamicFieldsModelSerializer):

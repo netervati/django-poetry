@@ -31,6 +31,7 @@ def test_poem_serializer(poem):
     poem_serializer = PoemSerializer(poem).data
 
     assert isinstance(poem_serializer, dict)
+    assert "id" in poem_serializer
     assert "age" in poem_serializer
     assert "author" in poem_serializer
     assert "content" in poem_serializer
