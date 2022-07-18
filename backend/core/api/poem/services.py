@@ -2,6 +2,7 @@ from rest_framework.exceptions import ValidationError
 
 
 from db.models import Poem
+from lib.mappers import ALLOWED_ATTR_FOR_POEM_EXACT, ALLOWED_ATTR_FOR_POEM_LIKE
 from lib.utils import clean_params
 
 
@@ -11,7 +12,7 @@ class RetrievePoemsExactService:
     """
 
     def __init__(self, params):
-        self.params = clean_params(params.query_params, Poem)
+        self.params = clean_params(params.query_params, ALLOWED_ATTR_FOR_POEM_EXACT)
 
     def run(self):
         errors = self.__validate_params()
@@ -40,7 +41,7 @@ class RetrievePoemsLikeService:
     """
 
     def __init__(self, params):
-        self.params = clean_params(params.query_params, Poem)
+        self.params = clean_params(params.query_params, ALLOWED_ATTR_FOR_POEM_LIKE)
 
     def run(self):
         errors = self.__validate_params()

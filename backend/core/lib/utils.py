@@ -1,4 +1,9 @@
-def clean_params(kwargs, model):
+"""
+Serves as the module for utilities in the API.
+"""
+
+
+def clean_params(kwargs, mapper):
     """
     Removes parameters that do not match
     the model attributes.
@@ -7,13 +12,7 @@ def clean_params(kwargs, model):
     params = {}
 
     for key, val in kwargs.items():
-        if key in model().__dict__:
-            if (
-                key != "id"
-                and key != "created_at"
-                and key != "updated_at"
-                and key != "user_id"
-            ):
-                params[key] = val
+        if key in mapper:
+            params[key] = val
 
     return params
