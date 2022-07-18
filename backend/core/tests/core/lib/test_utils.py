@@ -8,7 +8,11 @@ import pytest
 @pytest.fixture
 def kwargs(poem):
     poem_dict = vars(poem)
-    poem_dict["number"] = "test"
+    poem_dict["id"] = "test"
+    poem_dict["ignore"] = "test"
+    poem_dict["created_at"] = "test"
+    poem_dict["updated_at"] = "test"
+    poem_dict["user_id"] = "test"
 
     return poem_dict
 
@@ -17,4 +21,8 @@ def kwargs(poem):
 def test_clean_params(kwargs):
     params = clean_params(kwargs, Poem)
 
-    assert "number" not in params
+    assert "id" not in params
+    assert "ignore" not in params
+    assert "created_at" not in params
+    assert "updated_at" not in params
+    assert "user_id" not in params
