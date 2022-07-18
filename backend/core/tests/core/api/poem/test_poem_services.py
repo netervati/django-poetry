@@ -78,9 +78,7 @@ def test_retrieve_poems_like_with_no_return(client):
 
 @pytest.mark.django_db
 def test_retrieve_poems_like(client, poem):
-    substr_title = poem.title[0:1]
-
-    response = client.get(retrieve_poems_like_url, data={"title": substr_title})
+    response = client.get(retrieve_poems_like_url, data={"title": poem.title[0:1]})
 
     assert response.status_code == HTTP_200_OK
     assert isinstance(response.data, list)
