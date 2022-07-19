@@ -13,6 +13,7 @@ black = "*"
 fire = "*"
 pytest-django = "*"
 faker = "*"
+pyyaml = "*"
 
 [dev-packages]
 
