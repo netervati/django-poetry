@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 
-from db.models import Age, Author, Poem, Type
+from db.models import Author, Poem
 
 
 class DynamicFieldsModelSerializer(serializers.ModelSerializer):
@@ -18,13 +18,6 @@ class DynamicFieldsModelSerializer(serializers.ModelSerializer):
                 self.fields.pop(field_name)
 
 
-class AgeSerializer(DynamicFieldsModelSerializer):
-    class Meta:
-        model = Age
-
-        fields = ["name"]
-
-
 class AuthorSerializer(DynamicFieldsModelSerializer):
     class Meta:
         model = Author
@@ -37,10 +30,3 @@ class PoemSerializer(DynamicFieldsModelSerializer):
         model = Poem
 
         fields = ["id", "age", "author", "content", "title", "type"]
-
-
-class TypeSerializer(DynamicFieldsModelSerializer):
-    class Meta:
-        model = Type
-
-        fields = ["name"]

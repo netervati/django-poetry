@@ -7,24 +7,8 @@ import uuid
 MAX_LENGTH = 100
 
 
-class Age(models.Model):
-    id = (models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False),)
-    name = models.CharField(max_length=MAX_LENGTH)
-    created_on = models.DateTimeField(auto_now_add=True)
-    updated_on = models.DateField(auto_now=True)
-    user = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
-
-
 class Author(models.Model):
-    id = (models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False),)
-    name = models.CharField(max_length=MAX_LENGTH)
-    created_on = models.DateTimeField(auto_now_add=True)
-    updated_on = models.DateField(auto_now=True)
-    user = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
-
-
-class Type(models.Model):
-    id = (models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False),)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=MAX_LENGTH)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateField(auto_now=True)
@@ -32,7 +16,7 @@ class Type(models.Model):
 
 
 class Poem(models.Model):
-    id = (models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False),)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     age = models.CharField(max_length=MAX_LENGTH)
     author = models.CharField(max_length=MAX_LENGTH)
     content = models.TextField()
