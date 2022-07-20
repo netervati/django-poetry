@@ -1,9 +1,6 @@
-from api.serializers import (
-    AuthorSerializer,
-    PoemSerializer,
-)
-from tests.fixtures import author, poem, user
-
+from api.serializers import AuthorSerializer, PoemSerializer, ListSerializer
+from tests.fixtures import age, author, poem, user
+from lib.mappers import ListMapper
 
 import pytest
 
@@ -27,3 +24,12 @@ def test_poem_serializer(poem):
     assert "content" in poem_serializer
     assert "title" in poem_serializer
     assert "type" in poem_serializer
+
+
+@pytest.mark.django_db
+def test_list_serializer(age):
+    list_mapper = ListMapper([age]).to_dict()
+    list_serializer = ListSerializer(list_mapper).data
+
+    assert "total_records" in list_serializer
+    assert "data" in list_serializer

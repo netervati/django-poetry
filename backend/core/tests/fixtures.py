@@ -13,6 +13,11 @@ def user(faker):
 
 
 @pytest.fixture
+def age(faker):
+    return {"value": faker.company_suffix()}
+
+
+@pytest.fixture
 def author(user, faker):
     return Author.objects.create(
         name=faker.name(),
@@ -30,3 +35,8 @@ def poem(user, faker):
         type=faker.company_suffix(),
         user=user,
     )
+
+
+@pytest.fixture
+def type(faker):
+    return {"value": faker.catch_phrase()}

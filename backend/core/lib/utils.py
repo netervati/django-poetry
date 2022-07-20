@@ -32,4 +32,7 @@ class StandingData:
 
         f.close()
 
-        return data[key]
+        return self.__map(data[key])
+
+    def __map(self, data):
+        return [{"value": i} for i in data]
