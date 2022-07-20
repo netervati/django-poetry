@@ -27,7 +27,7 @@ def test_clean_params_for_poem_exact(kwargs):
 
 
 @pytest.mark.django_db
-def test_clean_params_for_poem_exact(kwargs):
+def test_clean_params_for_poem_like(kwargs):
     params = clean_params(kwargs, ALLOWED_ATTR_FOR_POEM_LIKE)
 
     assert "content" in params
