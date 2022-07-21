@@ -40,3 +40,23 @@ def test_retrieve_authors(client, author):
     assert response.data["total_records"] == 1
     assert response.data["data"][0]["id"] == str(author.id)
     assert response.data["data"][0]["name"] == author.name
+
+
+@pytest.mark.django_db
+def test_retrieve_author_not_found(client):
+    id = "xxx"
+    response = client.get(reverse("retrieve-author", kwargs={ "id": id }))
+
+    assert response.status_code == HTTP_400_BAD_REQUEST
+    assert isinstance(response.data, dict)
+    assert response.data["errors"] == f"No record with id {id} found."
+
+
+@pytest.mark.django_db
+def test_retrieve_author(client, author):
+    response = client.get(reverse("retrieve-author", kwargs={ "id": author.id }))
+
+    assert response.status_code == HTTP_200_OK
+    assert isinstance(response.data, dict)
+    assert response.data["data"]["id"] == str(author.id)
+    assert response.data["data"]["name"] == author.name

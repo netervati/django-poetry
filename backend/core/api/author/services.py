@@ -38,3 +38,22 @@ class RetrieveAuthorsService:
             params[f"{key}__icontains"] = val
 
         return params
+
+
+class RetrieveAuthorService:
+    """
+    Retrieves specific author.
+    """
+
+    def __init__(self, id):
+        self.id = id
+
+    def run(self):
+        try:
+            author = Author.objects.get(pk=self.id)
+        except:
+            raise ValidationError(
+                detail={"errors": f"No record with id {self.id} found."}
+            )
+
+        return author
