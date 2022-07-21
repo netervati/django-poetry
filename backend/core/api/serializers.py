@@ -22,7 +22,7 @@ class AuthorSerializer(DynamicFieldsModelSerializer):
     class Meta:
         model = Author
 
-        fields = ["name"]
+        fields = ["id", "name"]
 
 
 class PoemSerializer(DynamicFieldsModelSerializer):

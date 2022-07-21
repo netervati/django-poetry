@@ -3,9 +3,8 @@ API mappers
 """
 
 
+ALLOWED_ATTR_FOR_AUTHOR = ["name"]
 ALLOWED_ATTR_FOR_POEM_EXACT = ["age", "author", "title", "type"]
-
-
 ALLOWED_ATTR_FOR_POEM_LIKE = ALLOWED_ATTR_FOR_POEM_EXACT + ["content"]
 
 
