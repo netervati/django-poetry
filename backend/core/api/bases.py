@@ -9,9 +9,8 @@ from lib.mappers import ListMapper, RecordMapper
 class BaseController(ViewSet):
     def _render(self, data):
         mapper = self._mapper(data).to_dict()
-        print(mapper)
+
         serializer = self._serializer(mapper).data
-        print(serializer)
 
         return Response(serializer)
 
