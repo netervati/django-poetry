@@ -33,17 +33,17 @@ def format(name):
         for i in dataset
     ]
 
-    create_json(formatted)
+    create_json(formatted, "poem_seed_")
 
     return "Successfully created seed file"
 
 
-def create_json(datalist):
+def create_json(datalist, prefix):
     timestamp = str(datetime.now())
     pattern = "[" + "".join([":", " ", "-", "."]) + "]"
     clean_timestamp = re.sub(pattern, "", timestamp)
 
-    f = open(f"../backend/core/poem_seed_{clean_timestamp}.json", "a")
+    f = open(f"../backend/core/{prefix}{clean_timestamp}.json", "a")
 
     f.write(json.dumps(datalist, indent=2))
     f.close()
