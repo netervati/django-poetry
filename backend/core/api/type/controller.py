@@ -2,7 +2,7 @@ from django.urls import path
 
 
 from api.type.services import RetrieveTypesService
-from api.defaults import BaseController
+from api.bases import BaseController
 
 
 class TypeController(BaseController):

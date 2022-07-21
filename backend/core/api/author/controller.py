@@ -2,7 +2,7 @@ from django.urls import path
 
 
 from api.author.services import RetrieveAuthorsService
-from api.defaults import BaseController
+from api.bases import BaseController
 from api.serializers import AuthorSerializer
 
 

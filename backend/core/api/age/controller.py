@@ -2,7 +2,7 @@ from django.urls import path
 
 
 from api.age.services import RetrieveAgesService
-from api.defaults import BaseController
+from api.bases import BaseController
 
 
 class AgeController(BaseController):
