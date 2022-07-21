@@ -35,3 +35,7 @@ class PoemSerializer(DynamicFieldsModelSerializer):
 class ListSerializer(serializers.Serializer):
     total_records = serializers.IntegerField()
     data = serializers.ListField()
+
+
+class RecordSerializer(serializers.Serializer):
+    data = serializers.JSONField()
