@@ -26,5 +26,6 @@ class Poem(models.Model):
     updated_on = models.DateField(auto_now=True)
     user = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
 
-    # TO-DO feat_v1.0009: Add list property
-    # list(filter(None, self.content.split("\n")))
+    @property
+    def lines(self):
+        return list(filter(None, self.content.split("\n")))

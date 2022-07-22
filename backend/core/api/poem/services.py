@@ -69,3 +69,41 @@ class RetrievePoemsLikeService:
             params[f"{key}__icontains"] = val
 
         return params
+
+
+class RetrievePoemService:
+    """
+    Retrieves specific poem.
+    """
+
+    def __init__(self, id, params):
+        self.id = id
+        self.params = params.query_params
+
+    def run(self):
+        errors = self.__validate_params()
+
+        by_line = (
+            self.params["by-line"] == "true" if "by-line" in self.params else False
+        )
+
+        if errors:
+            raise ValidationError(detail={"errors": errors})
+
+        try:
+            poem = Poem.objects.get(pk=self.id)
+        except:
+            raise ValidationError(
+                detail={"errors": f"No record with id {self.id} found."}
+            )
+
+        return {"poem": poem, "by-line": bool(by_line)}
+
+    def __validate_params(self):
+        errors = []
+
+        for key, val in self.params.items():
+            if not val.strip():
+                errors.append({f"{key}": f"Parameter should not be blank."})
+
+        return errors
