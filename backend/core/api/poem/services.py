@@ -2,7 +2,11 @@ from rest_framework.exceptions import ValidationError
 
 
 from db.models import Poem
-from lib.mappers import ALLOWED_ATTR_FOR_POEM_EXACT, ALLOWED_ATTR_FOR_POEM_LIKE
+from lib.mappers import (
+    ALLOWED_ATTR_FOR_POEM,
+    ALLOWED_ATTR_FOR_POEM_EXACT,
+    ALLOWED_ATTR_FOR_POEM_LIKE,
+)
 from lib.utils import clean_params
 
 
@@ -78,17 +82,15 @@ class RetrievePoemService:
 
     def __init__(self, id, params):
         self.id = id
-        self.params = params.query_params
+        self.params = clean_params(params.query_params, ALLOWED_ATTR_FOR_POEM)
 
     def run(self):
-        errors = self.__validate_params()
+        if errors := self.__validate_params():
+            raise ValidationError(detail={"errors": errors})
 
         by_line = (
             self.params["by-line"] == "true" if "by-line" in self.params else False
         )
-
-        if errors:
-            raise ValidationError(detail={"errors": errors})
 
         try:
             poem = Poem.objects.get(pk=self.id)
@@ -97,7 +99,7 @@ class RetrievePoemService:
                 detail={"errors": f"No record with id {self.id} found."}
             )
 
-        return {"poem": poem, "by-line": bool(by_line)}
+        return {"poem": poem, "by-line": by_line}
 
     def __validate_params(self):
         errors = []
