@@ -26,7 +26,7 @@ class RetrievePoemsExactService(BaseService):
         return Poem.objects.filter(**self.params)
 
 
-class RetrievePoemsLikeService:
+class RetrievePoemsLikeService(BaseService):
     """
     Retrieves the poems with attributes like query parameters.
     """
@@ -35,24 +35,12 @@ class RetrievePoemsLikeService:
         self.params = clean_params(params.query_params, ALLOWED_ATTR_FOR_POEM_LIKE)
 
     def run(self):
-        errors = self.__validate_params()
-
-        if errors:
+        if errors := self._validate_params(["missing_params", "blank_params"]):
             raise ValidationError(detail={"errors": errors})
 
-        return Poem.objects.filter(**self.__like_params())
+        return Poem.objects.filter(**self.__like_params)
 
-    def __validate_params(self):
-        errors = []
-        if len(self.params) == 0:
-            errors.append("You are missing valid query parameters.")
-
-        for key, val in self.params.items():
-            if not val.strip():
-                errors.append({f"{key}": f"Parameter should not be blank."})
-
-        return errors
-
+    @property
     def __like_params(self):
         params = {}
 
