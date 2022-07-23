@@ -27,7 +27,7 @@ def test_poem_by_line_serializer(poem):
     assert isinstance(poem_by_line_serializer, dict)
     assert "id" in poem_by_line_serializer
     assert "age" in poem_by_line_serializer
-    assert "author" in poem_by_line_serializer
+    assert "author_details" in poem_by_line_serializer
     assert "lines" in poem_by_line_serializer
     assert "title" in poem_by_line_serializer
     assert "type" in poem_by_line_serializer
@@ -40,7 +40,7 @@ def test_poem_serializer(poem):
     assert isinstance(poem_serializer, dict)
     assert "id" in poem_serializer
     assert "age" in poem_serializer
-    assert "author" in poem_serializer
+    assert "author_details" in poem_serializer
     assert "content" in poem_serializer
     assert "title" in poem_serializer
     assert "type" in poem_serializer

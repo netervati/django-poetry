@@ -26,10 +26,10 @@ def author(user, faker):
 
 
 @pytest.fixture
-def poem(user, faker):
+def poem(author, user, faker):
     return Poem.objects.create(
         age=faker.company_suffix(),
-        author=faker.name(),
+        author=author,
         content=faker.text(),
         title=faker.catch_phrase(),
         type=faker.company_suffix(),

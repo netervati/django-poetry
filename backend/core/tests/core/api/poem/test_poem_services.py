@@ -5,7 +5,7 @@ from rest_framework.status import (
 )
 
 
-from tests.fixtures import poem, user
+from tests.fixtures import author, poem, user
 
 
 import pytest
@@ -52,7 +52,7 @@ def test_retrieve_poems_exact(client, poem):
     assert response.data["total_records"] == 1
     assert isinstance(response.data["data"], list)
     assert response.data["data"][0]["age"] == poem.age
-    assert response.data["data"][0]["author"] == poem.author
+    assert response.data["data"][0]["author_details"]["id"] == poem.author.id
     assert response.data["data"][0]["content"] == poem.content
     assert response.data["data"][0]["title"] == poem.title
     assert response.data["data"][0]["type"] == poem.type
@@ -68,7 +68,7 @@ def test_retrieve_poems_exact_by_line(client, poem):
     assert response.data["total_records"] == 1
     assert isinstance(response.data["data"], list)
     assert response.data["data"][0]["age"] == poem.age
-    assert response.data["data"][0]["author"] == poem.author
+    assert response.data["data"][0]["author_details"]["id"] == poem.author.id
     assert response.data["data"][0]["lines"] == poem.lines
     assert response.data["data"][0]["title"] == poem.title
     assert response.data["data"][0]["type"] == poem.type
@@ -106,7 +106,7 @@ def test_retrieve_poems_like(client, poem):
     assert response.data["total_records"] == 1
     assert isinstance(response.data["data"], list)
     assert response.data["data"][0]["age"] == poem.age
-    assert response.data["data"][0]["author"] == poem.author
+    assert response.data["data"][0]["author_details"]["id"] == poem.author.id
     assert response.data["data"][0]["content"] == poem.content
     assert response.data["data"][0]["title"] == poem.title
     assert response.data["data"][0]["type"] == poem.type
@@ -122,7 +122,7 @@ def test_retrieve_poems_like_by_line(client, poem):
     assert response.data["total_records"] == 1
     assert isinstance(response.data["data"], list)
     assert response.data["data"][0]["age"] == poem.age
-    assert response.data["data"][0]["author"] == poem.author
+    assert response.data["data"][0]["author_details"]["id"] == poem.author.id
     assert response.data["data"][0]["lines"] == poem.lines
     assert response.data["data"][0]["title"] == poem.title
     assert response.data["data"][0]["type"] == poem.type
@@ -153,7 +153,7 @@ def test_retrieve_poem(client, poem):
     assert response.status_code == HTTP_200_OK
     assert isinstance(response.data, dict)
     assert response.data["data"]["age"] == poem.age
-    assert response.data["data"]["author"] == poem.author
+    assert response.data["data"]["author_details"]["id"] == poem.author.id
     assert response.data["data"]["content"] == poem.content
     assert response.data["data"]["title"] == poem.title
     assert response.data["data"]["type"] == poem.type
@@ -166,7 +166,7 @@ def test_retrieve_poem_by_line(client, poem):
     assert response.status_code == HTTP_200_OK
     assert isinstance(response.data, dict)
     assert response.data["data"]["age"] == poem.age
-    assert response.data["data"]["author"] == poem.author
+    assert response.data["data"]["author_details"]["id"] == poem.author.id
     assert response.data["data"]["lines"] == poem.lines
     assert response.data["data"]["title"] == poem.title
     assert response.data["data"]["type"] == poem.type
