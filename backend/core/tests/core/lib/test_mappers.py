@@ -1,9 +1,20 @@
-from lib.mappers import ListMapper
-from tests.fixtures import age
+from api.serializers import AuthorSerializer
+from lib.mappers import RecordMapper, ListMapper
+from tests.fixtures import age, author, user
 
 
-def test_clean_params_for_poem_exact(age):
+import pytest
+
+
+def test_list_mapper(age):
     mapper = ListMapper([age]).to_dict()
 
     assert mapper["total_records"] == 1
     assert mapper["data"] == [age]
+
+
+@pytest.mark.django_db
+def test_record_mapper(author):
+    mapper = RecordMapper(AuthorSerializer(author).data).to_dict()
+
+    assert mapper["data"]["name"] == author.name

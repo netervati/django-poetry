@@ -1,6 +1,4 @@
 from django.urls import path
-from rest_framework.response import Response
-from rest_framework.viewsets import ViewSet
 
 
 from api.bases import BaseController
@@ -14,23 +12,26 @@ from api.serializers import PoemByLineSerializer, PoemSerializer
 
 class PoemController(BaseController):
     def retrieve_exact(self, request):
-        result = RetrievePoemsExactService(request).run()
-
-        return self._render_list(PoemSerializer(result, many=True).data)
+        return self._render_list(
+            self.__poem_serialized(RetrievePoemsExactService(request).run(), many=True)
+        )
 
     def retrieve_like(self, request):
-        result = RetrievePoemsLikeService(request).run()
-
-        return self._render_list(PoemSerializer(result, many=True).data)
+        return self._render_list(
+            self.__poem_serialized(RetrievePoemsLikeService(request).run(), many=True)
+        )
 
     def retrieve(self, request, id):
-        result = RetrievePoemService(id, request).run()
+        return self._render(
+            self.__poem_serialized(RetrievePoemService(id, request).run())
+        )
 
+    def __poem_serialized(self, result, many=False):
         serializer = (
             PoemByLineSerializer if result["by-line"] is True else PoemSerializer
         )
 
-        return self._render(serializer(result["poem"]).data)
+        return serializer(result["poem"], many=many).data
 
 
 urlpatterns = [
