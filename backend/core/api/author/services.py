@@ -53,7 +53,7 @@ class RetrieveAuthorService:
             author = Author.objects.get(pk=self.id)
         except:
             raise ValidationError(
-                detail={"errors": f"No record with id {self.id} found."}
+                detail={"errors": [f"No record with id {self.id} found."]}
             )
 
         return author
