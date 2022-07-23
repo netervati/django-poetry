@@ -45,7 +45,7 @@ class BaseService:
         errors = []
 
         if "missing_params" in validations:
-            errors.append(self.__require_params)
+            errors += self.__require_params
 
         if "blank_params" in validations:
             errors += self.__blank_params
@@ -65,4 +65,6 @@ class BaseService:
     @property
     def __require_params(self):
         if len(self.params) == 0:
-            return "You are missing valid query parameters."
+            return ["You are missing valid query parameters."]
+
+        return []
