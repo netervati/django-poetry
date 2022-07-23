@@ -27,6 +27,10 @@ class RetrievePoemsExactService(BaseService):
             self.params["by-line"] == "true" if "by-line" in self.params else False
         )
 
+        if "author" in self.params:
+            self.params["author__name"] = self.params["author"]
+            self.params.pop("author")
+
         if "by-line" in self.params:
             self.params.pop("by-line")
 
@@ -48,6 +52,10 @@ class RetrievePoemsLikeService(BaseService):
         by_line = (
             self.params["by-line"] == "true" if "by-line" in self.params else False
         )
+
+        if "author" in self.params:
+            self.params["author__name"] = self.params["author"]
+            self.params.pop("author")
 
         if "by-line" in self.params:
             self.params.pop("by-line")
