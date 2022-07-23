@@ -59,6 +59,22 @@ def test_retrieve_poems_exact(client, poem):
 
 
 @pytest.mark.django_db
+def test_retrieve_poems_exact_by_line(client, poem):
+    response = client.get(
+        retrieve_poems_exact_url, data={"title": poem.title, "by-line": "true"}
+    )
+
+    assert response.status_code == HTTP_200_OK
+    assert response.data["total_records"] == 1
+    assert isinstance(response.data["data"], list)
+    assert response.data["data"][0]["age"] == poem.age
+    assert response.data["data"][0]["author"] == poem.author
+    assert response.data["data"][0]["lines"] == poem.lines
+    assert response.data["data"][0]["title"] == poem.title
+    assert response.data["data"][0]["type"] == poem.type
+
+
+@pytest.mark.django_db
 def test_retrieve_poems_like_with_missing_params(client):
     response = client.get(retrieve_poems_exact_url)
 
@@ -92,6 +108,22 @@ def test_retrieve_poems_like(client, poem):
     assert response.data["data"][0]["age"] == poem.age
     assert response.data["data"][0]["author"] == poem.author
     assert response.data["data"][0]["content"] == poem.content
+    assert response.data["data"][0]["title"] == poem.title
+    assert response.data["data"][0]["type"] == poem.type
+
+
+@pytest.mark.django_db
+def test_retrieve_poems_like_by_line(client, poem):
+    response = client.get(
+        retrieve_poems_like_url, data={"title": poem.title[0:1], "by-line": "true"}
+    )
+
+    assert response.status_code == HTTP_200_OK
+    assert response.data["total_records"] == 1
+    assert isinstance(response.data["data"], list)
+    assert response.data["data"][0]["age"] == poem.age
+    assert response.data["data"][0]["author"] == poem.author
+    assert response.data["data"][0]["lines"] == poem.lines
     assert response.data["data"][0]["title"] == poem.title
     assert response.data["data"][0]["type"] == poem.type
 
