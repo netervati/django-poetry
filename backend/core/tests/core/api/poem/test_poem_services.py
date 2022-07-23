@@ -53,6 +53,7 @@ def test_retrieve_poems_exact(client, poem):
     assert isinstance(response.data["data"], list)
     assert response.data["data"][0]["age"] == poem.age
     assert response.data["data"][0]["author_details"]["id"] == poem.author.id
+    assert response.data["data"][0]["author_details"]["name"] == poem.author.name
     assert response.data["data"][0]["content"] == poem.content
     assert response.data["data"][0]["title"] == poem.title
     assert response.data["data"][0]["type"] == poem.type
@@ -69,6 +70,7 @@ def test_retrieve_poems_exact_by_line(client, poem):
     assert isinstance(response.data["data"], list)
     assert response.data["data"][0]["age"] == poem.age
     assert response.data["data"][0]["author_details"]["id"] == poem.author.id
+    assert response.data["data"][0]["author_details"]["name"] == poem.author.name
     assert response.data["data"][0]["lines"] == poem.lines
     assert response.data["data"][0]["title"] == poem.title
     assert response.data["data"][0]["type"] == poem.type
@@ -107,6 +109,7 @@ def test_retrieve_poems_like(client, poem):
     assert isinstance(response.data["data"], list)
     assert response.data["data"][0]["age"] == poem.age
     assert response.data["data"][0]["author_details"]["id"] == poem.author.id
+    assert response.data["data"][0]["author_details"]["name"] == poem.author.name
     assert response.data["data"][0]["content"] == poem.content
     assert response.data["data"][0]["title"] == poem.title
     assert response.data["data"][0]["type"] == poem.type
@@ -123,6 +126,7 @@ def test_retrieve_poems_like_by_line(client, poem):
     assert isinstance(response.data["data"], list)
     assert response.data["data"][0]["age"] == poem.age
     assert response.data["data"][0]["author_details"]["id"] == poem.author.id
+    assert response.data["data"][0]["author_details"]["name"] == poem.author.name
     assert response.data["data"][0]["lines"] == poem.lines
     assert response.data["data"][0]["title"] == poem.title
     assert response.data["data"][0]["type"] == poem.type
