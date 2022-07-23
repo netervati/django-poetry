@@ -35,4 +35,5 @@ jobs:
           mypy ./
       - name: Run tests
         run: |
+          cd backend/core/
           pytest
