@@ -11,7 +11,22 @@ from lib.mappers import (
 from lib.utils import clean_params
 
 
-class RetrievePoemsExactService(BaseService):
+class ListPoemService(BaseService):
+    def _fix_filters(self, params):
+        by_line = False
+
+        if "author" in params:
+            params["author__name"] = params["author"]
+            params.pop("author")
+
+        if "by-line" in params:
+            by_line = params["by-line"] == "true"
+            params.pop("by-line")
+
+        return (params, by_line)
+
+
+class RetrievePoemsExactService(ListPoemService):
     """
     Retrieves the poems based exactly on the query parameters.
     """
@@ -23,21 +38,12 @@ class RetrievePoemsExactService(BaseService):
         if errors := self._validate_params(["missing_params", "blank_params"]):
             raise ValidationError(detail={"errors": errors})
 
-        by_line = (
-            self.params["by-line"] == "true" if "by-line" in self.params else False
-        )
-
-        if "author" in self.params:
-            self.params["author__name"] = self.params["author"]
-            self.params.pop("author")
-
-        if "by-line" in self.params:
-            self.params.pop("by-line")
+        self.params, by_line = self._fix_filters(self.params)
 
         return {"poem": Poem.objects.filter(**self.params), "by-line": by_line}
 
 
-class RetrievePoemsLikeService(BaseService):
+class RetrievePoemsLikeService(ListPoemService):
     """
     Retrieves the poems with attributes like query parameters.
     """
@@ -49,16 +55,7 @@ class RetrievePoemsLikeService(BaseService):
         if errors := self._validate_params(["missing_params", "blank_params"]):
             raise ValidationError(detail={"errors": errors})
 
-        by_line = (
-            self.params["by-line"] == "true" if "by-line" in self.params else False
-        )
-
-        if "author" in self.params:
-            self.params["author__name"] = self.params["author"]
-            self.params.pop("author")
-
-        if "by-line" in self.params:
-            self.params.pop("by-line")
+        self.params, by_line = self._fix_filters(self.params)
 
         return {"poem": Poem.objects.filter(**self.__like_params), "by-line": by_line}
 
