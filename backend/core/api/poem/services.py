@@ -23,7 +23,14 @@ class RetrievePoemsExactService(BaseService):
         if errors := self._validate_params(["missing_params", "blank_params"]):
             raise ValidationError(detail={"errors": errors})
 
-        return Poem.objects.filter(**self.params)
+        by_line = (
+            self.params["by-line"] == "true" if "by-line" in self.params else False
+        )
+
+        if "by-line" in self.params:
+            self.params.pop("by-line")
+
+        return {"poem": Poem.objects.filter(**self.params), "by-line": by_line}
 
 
 class RetrievePoemsLikeService(BaseService):
@@ -38,7 +45,14 @@ class RetrievePoemsLikeService(BaseService):
         if errors := self._validate_params(["missing_params", "blank_params"]):
             raise ValidationError(detail={"errors": errors})
 
-        return Poem.objects.filter(**self.__like_params)
+        by_line = (
+            self.params["by-line"] == "true" if "by-line" in self.params else False
+        )
+
+        if "by-line" in self.params:
+            self.params.pop("by-line")
+
+        return {"poem": Poem.objects.filter(**self.__like_params), "by-line": by_line}
 
     @property
     def __like_params(self):
