@@ -7,7 +7,7 @@ import yaml
 def clean_params(kwargs, mapper):
     """
     Removes parameters that do not match
-    the model attributes.
+    the mapper attributes.
     """
 
     params = {}

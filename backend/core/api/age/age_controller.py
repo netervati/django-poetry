@@ -7,9 +7,7 @@ from api.bases import BaseController
 
 class AgeController(BaseController):
     def retrieve(self, request):
-        result = RetrieveAgesService().run()
-
-        return self._render_list(result)
+        return self._render_list(RetrieveAgesService().run())
 
 
 urlpatterns = [

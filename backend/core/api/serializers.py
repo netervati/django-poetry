@@ -25,18 +25,18 @@ class AuthorSerializer(DynamicFieldsModelSerializer):
         fields = ["id", "name"]
 
 
-class PoemSerializer(DynamicFieldsModelSerializer):
-    class Meta:
-        model = Poem
-
-        fields = ["id", "age", "author_details", "content", "title", "type"]
-
-
 class PoemByLineSerializer(DynamicFieldsModelSerializer):
     class Meta:
         model = Poem
 
         fields = ["id", "age", "author_details", "lines", "title", "type"]
+
+
+class PoemSerializer(DynamicFieldsModelSerializer):
+    class Meta:
+        model = Poem
+
+        fields = ["id", "age", "author_details", "content", "title", "type"]
 
 
 class ListSerializer(serializers.Serializer):
