@@ -16,18 +16,10 @@ class RetrieveAuthorsService(BaseService):
         self.params = clean_params(params.query_params, ALLOWED_ATTR_FOR_AUTHOR)
 
     def run(self):
-        if errors := self._validate_params(["missing_params", "blank_params"]):
+        if errors := self._validate(["missing_params", "blank_params"]):
             raise ValidationError(detail={"errors": errors})
 
-        return Author.objects.filter(**self.__like_params())
-
-    def __like_params(self):
-        params = {}
-
-        for key, val in self.params.items():
-            params[f"{key}__icontains"] = val
-
-        return params
+        return Author.objects.filter(**self._like(self.params))
 
 
 class RetrieveAuthorService:

@@ -35,7 +35,7 @@ class RetrievePoemsExactService(ListPoemService):
         self.params = clean_params(params.query_params, ALLOWED_ATTR_FOR_POEM_EXACT)
 
     def run(self):
-        if errors := self._validate_params(["missing_params", "blank_params"]):
+        if errors := self._validate(["missing_params", "blank_params"]):
             raise ValidationError(detail={"errors": errors})
 
         self.params, by_line = self._fix_filters(self.params)
@@ -52,21 +52,15 @@ class RetrievePoemsLikeService(ListPoemService):
         self.params = clean_params(params.query_params, ALLOWED_ATTR_FOR_POEM_LIKE)
 
     def run(self):
-        if errors := self._validate_params(["missing_params", "blank_params"]):
+        if errors := self._validate(["missing_params", "blank_params"]):
             raise ValidationError(detail={"errors": errors})
 
         self.params, by_line = self._fix_filters(self.params)
 
-        return {"poem": Poem.objects.filter(**self.__like_params), "by-line": by_line}
-
-    @property
-    def __like_params(self):
-        params = {}
-
-        for key, val in self.params.items():
-            params[f"{key}__icontains"] = val
-
-        return params
+        return {
+            "poem": Poem.objects.filter(**self._like(self.params)),
+            "by-line": by_line,
+        }
 
 
 class RetrievePoemService(BaseService):
@@ -79,7 +73,7 @@ class RetrievePoemService(BaseService):
         self.params = clean_params(params.query_params, ALLOWED_ATTR_FOR_POEM)
 
     def run(self):
-        if errors := self._validate_params(["blank_params"]):
+        if errors := self._validate(["blank_params"]):
             raise ValidationError(detail={"errors": errors})
 
         by_line = (
