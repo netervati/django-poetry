@@ -49,7 +49,7 @@ def test_retrieve_author_not_found(client):
 
     assert response.status_code == HTTP_400_BAD_REQUEST
     assert isinstance(response.data, dict)
-    assert response.data["errors"] == f"No record with id {id} found."
+    assert response.data["errors"] == [f"No record with id {id} found."]
 
 
 @pytest.mark.django_db
