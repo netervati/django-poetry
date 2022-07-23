@@ -1,7 +1,7 @@
 from django.urls import path
 
 
-from api.author.services import RetrieveAuthorService, RetrieveAuthorsService
+from api.author.author_services import RetrieveAuthorService, RetrieveAuthorsService
 from api.bases import BaseController
 from api.serializers import AuthorSerializer
 

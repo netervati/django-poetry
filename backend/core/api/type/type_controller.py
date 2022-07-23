@@ -1,7 +1,7 @@
 from django.urls import path
 
 
-from api.type.services import RetrieveTypesService
+from api.type.type_services import RetrieveTypesService
 from api.bases import BaseController
 
 
