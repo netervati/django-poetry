@@ -3,11 +3,16 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
 
-from api.poem.services import RetrievePoemsExactService, RetrievePoemsLikeService
-from api.serializers import PoemSerializer
+from api.bases import BaseController
+from api.poem.services import (
+    RetrievePoemService,
+    RetrievePoemsExactService,
+    RetrievePoemsLikeService,
+)
+from api.serializers import PoemByLineSerializer, PoemSerializer
 
 
-class PoemController(ViewSet):
+class PoemController(BaseController):
     def retrieve_exact(self, request):
         result = RetrievePoemsExactService(request).run()
 
@@ -18,8 +23,22 @@ class PoemController(ViewSet):
 
         return Response(PoemSerializer(result, many=True).data)
 
+    def retrieve(self, request, id):
+        result = RetrievePoemService(id, request).run()
+
+        serializer = (
+            PoemByLineSerializer if result["by-line"] is True else PoemSerializer
+        )
+
+        return self._render(serializer(result["poem"]).data)
+
 
 urlpatterns = [
+    path(
+        "<str:id>",
+        PoemController.as_view({"get": "retrieve"}),
+        name="retrieve-poem",
+    ),
     path(
         "exact/",
         PoemController.as_view({"get": "retrieve_exact"}),
