@@ -16,12 +16,12 @@ class PoemController(BaseController):
     def retrieve_exact(self, request):
         result = RetrievePoemsExactService(request).run()
 
-        return Response(PoemSerializer(result, many=True).data)
+        return self._render_list(PoemSerializer(result, many=True).data)
 
     def retrieve_like(self, request):
         result = RetrievePoemsLikeService(request).run()
 
-        return Response(PoemSerializer(result, many=True).data)
+        return self._render_list(PoemSerializer(result, many=True).data)
 
     def retrieve(self, request, id):
         result = RetrievePoemService(id, request).run()
