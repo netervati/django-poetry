@@ -1,21 +1,19 @@
 from django.urls import path
 
 
-from api.author.services import RetrieveAuthorService, RetrieveAuthorsService
+from api.author.author_services import RetrieveAuthorService, RetrieveAuthorsService
 from api.bases import BaseController
 from api.serializers import AuthorSerializer
 
 
 class AuthorController(BaseController):
     def retrieve_list(self, request):
-        result = RetrieveAuthorsService(request).run()
-
-        return self._render_list(AuthorSerializer(result, many=True).data)
+        return self._render_list(
+            AuthorSerializer(RetrieveAuthorsService(request).run(), many=True).data
+        )
 
     def retrieve(self, request, id):
-        result = RetrieveAuthorService(id).run()
-
-        return self._render(AuthorSerializer(result).data)
+        return self._render(AuthorSerializer(RetrieveAuthorService(id).run()).data)
 
 
 urlpatterns = [

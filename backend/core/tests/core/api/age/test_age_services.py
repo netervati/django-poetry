@@ -12,4 +12,4 @@ def test_retrieve_ages(client):
 
     assert response.status_code == HTTP_200_OK
     assert isinstance(response.data, dict)
-    assert isinstance(response.data["data"], list)
+    assert isinstance(response.data["attributes"], list)

@@ -29,6 +29,10 @@ jobs:
         run: |
           cd backend/core/
           python manage.py migrate
+      - name: Run type checker
+        run: |
+          cd backend/core/
+          mypy ./
       - name: Run tests
         run: |
           cd backend/core/

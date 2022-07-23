@@ -1,4 +1,6 @@
 from rest_framework import serializers
+from rest_framework.utils.serializer_helpers import ReturnDict
+from typing import Union
 
 
 from db.models import Author, Poem
@@ -25,13 +27,6 @@ class AuthorSerializer(DynamicFieldsModelSerializer):
         fields = ["id", "name"]
 
 
-class PoemSerializer(DynamicFieldsModelSerializer):
-    class Meta:
-        model = Poem
-
-        fields = ["id", "age", "author_details", "content", "title", "type"]
-
-
 class PoemByLineSerializer(DynamicFieldsModelSerializer):
     class Meta:
         model = Poem
@@ -39,10 +34,17 @@ class PoemByLineSerializer(DynamicFieldsModelSerializer):
         fields = ["id", "age", "author_details", "lines", "title", "type"]
 
 
+class PoemSerializer(DynamicFieldsModelSerializer):
+    class Meta:
+        model = Poem
+
+        fields = ["id", "age", "author_details", "content", "title", "type"]
+
+
 class ListSerializer(serializers.Serializer):
     total_records = serializers.IntegerField()
-    data = serializers.ListField()
+    attributes = serializers.ListField()
 
 
 class RecordSerializer(serializers.Serializer):
-    data = serializers.JSONField()
+    attributes = serializers.JSONField()

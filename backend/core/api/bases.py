@@ -15,9 +15,7 @@ class BaseController(ViewSet):
         return Response(serializer)
 
     def _render_list(self, data):
-        mapper = self._mapper_list(data).to_dict()
-
-        return Response(self._serializer_list(mapper).data)
+        return Response(self._serializer_list(self._mapper_list(data).to_dict()).data)
 
     @property
     def _mapper(self):

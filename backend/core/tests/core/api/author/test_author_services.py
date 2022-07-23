@@ -27,7 +27,7 @@ def test_retrieve_authors_with_no_return(client):
     response = client.get(retrieve_authors_url, data={"name": "xxx"})
 
     assert response.status_code == HTTP_200_OK
-    assert not response.data["data"]
+    assert not response.data["attributes"]
 
 
 @pytest.mark.django_db
@@ -36,10 +36,10 @@ def test_retrieve_authors(client, author):
 
     assert response.status_code == HTTP_200_OK
     assert isinstance(response.data, dict)
-    assert isinstance(response.data["data"], list)
+    assert isinstance(response.data["attributes"], list)
     assert response.data["total_records"] == 1
-    assert response.data["data"][0]["id"] == str(author.id)
-    assert response.data["data"][0]["name"] == author.name
+    assert response.data["attributes"][0]["id"] == str(author.id)
+    assert response.data["attributes"][0]["name"] == author.name
 
 
 @pytest.mark.django_db
@@ -58,5 +58,5 @@ def test_retrieve_author(client, author):
 
     assert response.status_code == HTTP_200_OK
     assert isinstance(response.data, dict)
-    assert response.data["data"]["id"] == str(author.id)
-    assert response.data["data"]["name"] == author.name
+    assert response.data["attributes"]["id"] == str(author.id)
+    assert response.data["attributes"]["name"] == author.name

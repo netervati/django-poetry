@@ -41,7 +41,7 @@ def test_retrieve_poems_exact_with_no_return(client):
     response = client.get(retrieve_poems_exact_url, data={"title": "test"})
 
     assert response.status_code == HTTP_200_OK
-    assert len(response.data["data"]) == 0
+    assert len(response.data["attributes"]) == 0
 
 
 @pytest.mark.django_db
@@ -50,13 +50,13 @@ def test_retrieve_poems_exact(client, poem):
 
     assert response.status_code == HTTP_200_OK
     assert response.data["total_records"] == 1
-    assert isinstance(response.data["data"], list)
-    assert response.data["data"][0]["age"] == poem.age
-    assert response.data["data"][0]["author_details"]["id"] == poem.author.id
-    assert response.data["data"][0]["author_details"]["name"] == poem.author.name
-    assert response.data["data"][0]["content"] == poem.content
-    assert response.data["data"][0]["title"] == poem.title
-    assert response.data["data"][0]["type"] == poem.type
+    assert isinstance(response.data["attributes"], list)
+    assert response.data["attributes"][0]["age"] == poem.age
+    assert response.data["attributes"][0]["author_details"]["id"] == poem.author.id
+    assert response.data["attributes"][0]["author_details"]["name"] == poem.author.name
+    assert response.data["attributes"][0]["content"] == poem.content
+    assert response.data["attributes"][0]["title"] == poem.title
+    assert response.data["attributes"][0]["type"] == poem.type
 
 
 @pytest.mark.django_db
@@ -67,13 +67,13 @@ def test_retrieve_poems_exact_by_line(client, poem):
 
     assert response.status_code == HTTP_200_OK
     assert response.data["total_records"] == 1
-    assert isinstance(response.data["data"], list)
-    assert response.data["data"][0]["age"] == poem.age
-    assert response.data["data"][0]["author_details"]["id"] == poem.author.id
-    assert response.data["data"][0]["author_details"]["name"] == poem.author.name
-    assert response.data["data"][0]["lines"] == poem.lines
-    assert response.data["data"][0]["title"] == poem.title
-    assert response.data["data"][0]["type"] == poem.type
+    assert isinstance(response.data["attributes"], list)
+    assert response.data["attributes"][0]["age"] == poem.age
+    assert response.data["attributes"][0]["author_details"]["id"] == poem.author.id
+    assert response.data["attributes"][0]["author_details"]["name"] == poem.author.name
+    assert response.data["attributes"][0]["lines"] == poem.lines
+    assert response.data["attributes"][0]["title"] == poem.title
+    assert response.data["attributes"][0]["type"] == poem.type
 
 
 @pytest.mark.django_db
@@ -97,7 +97,7 @@ def test_retrieve_poems_like_with_no_return(client):
     response = client.get(retrieve_poems_like_url, data={"title": "test"})
 
     assert response.status_code == HTTP_200_OK
-    assert len(response.data["data"]) == 0
+    assert len(response.data["attributes"]) == 0
 
 
 @pytest.mark.django_db
@@ -106,13 +106,13 @@ def test_retrieve_poems_like(client, poem):
 
     assert response.status_code == HTTP_200_OK
     assert response.data["total_records"] == 1
-    assert isinstance(response.data["data"], list)
-    assert response.data["data"][0]["age"] == poem.age
-    assert response.data["data"][0]["author_details"]["id"] == poem.author.id
-    assert response.data["data"][0]["author_details"]["name"] == poem.author.name
-    assert response.data["data"][0]["content"] == poem.content
-    assert response.data["data"][0]["title"] == poem.title
-    assert response.data["data"][0]["type"] == poem.type
+    assert isinstance(response.data["attributes"], list)
+    assert response.data["attributes"][0]["age"] == poem.age
+    assert response.data["attributes"][0]["author_details"]["id"] == poem.author.id
+    assert response.data["attributes"][0]["author_details"]["name"] == poem.author.name
+    assert response.data["attributes"][0]["content"] == poem.content
+    assert response.data["attributes"][0]["title"] == poem.title
+    assert response.data["attributes"][0]["type"] == poem.type
 
 
 @pytest.mark.django_db
@@ -123,13 +123,13 @@ def test_retrieve_poems_like_by_line(client, poem):
 
     assert response.status_code == HTTP_200_OK
     assert response.data["total_records"] == 1
-    assert isinstance(response.data["data"], list)
-    assert response.data["data"][0]["age"] == poem.age
-    assert response.data["data"][0]["author_details"]["id"] == poem.author.id
-    assert response.data["data"][0]["author_details"]["name"] == poem.author.name
-    assert response.data["data"][0]["lines"] == poem.lines
-    assert response.data["data"][0]["title"] == poem.title
-    assert response.data["data"][0]["type"] == poem.type
+    assert isinstance(response.data["attributes"], list)
+    assert response.data["attributes"][0]["age"] == poem.age
+    assert response.data["attributes"][0]["author_details"]["id"] == poem.author.id
+    assert response.data["attributes"][0]["author_details"]["name"] == poem.author.name
+    assert response.data["attributes"][0]["lines"] == poem.lines
+    assert response.data["attributes"][0]["title"] == poem.title
+    assert response.data["attributes"][0]["type"] == poem.type
 
 
 @pytest.mark.django_db
@@ -156,11 +156,11 @@ def test_retrieve_poem(client, poem):
 
     assert response.status_code == HTTP_200_OK
     assert isinstance(response.data, dict)
-    assert response.data["data"]["age"] == poem.age
-    assert response.data["data"]["author_details"]["id"] == poem.author.id
-    assert response.data["data"]["content"] == poem.content
-    assert response.data["data"]["title"] == poem.title
-    assert response.data["data"]["type"] == poem.type
+    assert response.data["attributes"]["age"] == poem.age
+    assert response.data["attributes"]["author_details"]["id"] == poem.author.id
+    assert response.data["attributes"]["content"] == poem.content
+    assert response.data["attributes"]["title"] == poem.title
+    assert response.data["attributes"]["type"] == poem.type
 
 
 @pytest.mark.django_db
@@ -169,8 +169,8 @@ def test_retrieve_poem_by_line(client, poem):
 
     assert response.status_code == HTTP_200_OK
     assert isinstance(response.data, dict)
-    assert response.data["data"]["age"] == poem.age
-    assert response.data["data"]["author_details"]["id"] == poem.author.id
-    assert response.data["data"]["lines"] == poem.lines
-    assert response.data["data"]["title"] == poem.title
-    assert response.data["data"]["type"] == poem.type
+    assert response.data["attributes"]["age"] == poem.age
+    assert response.data["attributes"]["author_details"]["id"] == poem.author.id
+    assert response.data["attributes"]["lines"] == poem.lines
+    assert response.data["attributes"]["title"] == poem.title
+    assert response.data["attributes"]["type"] == poem.type

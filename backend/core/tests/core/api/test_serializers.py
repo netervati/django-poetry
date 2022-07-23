@@ -52,7 +52,7 @@ def test_list_serializer(age):
     list_serializer = ListSerializer(list_mapper).data
 
     assert "total_records" in list_serializer
-    assert "data" in list_serializer
+    assert "attributes" in list_serializer
 
 
 @pytest.mark.django_db
@@ -60,4 +60,4 @@ def test_record_serializer(age):
     record_mapper = RecordMapper([age]).to_dict()
     record_serializer = RecordSerializer(record_mapper).data
 
-    assert "data" in record_serializer
+    assert "attributes" in record_serializer
