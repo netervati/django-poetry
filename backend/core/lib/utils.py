@@ -4,7 +4,7 @@ Serves as the module for utilities in the API.
 import yaml
 
 
-def clean_params(kwargs, mapper):
+def clean_params(kwargs: dict, mapper: list) -> dict:
     """
     Removes parameters that do not match
     the mapper attributes.
@@ -20,13 +20,13 @@ def clean_params(kwargs, mapper):
 
 
 class StandingData:
-    def retrieve_ages(self):
+    def retrieve_ages(self) -> list:
         return self.__load_yaml("ages")
 
-    def retrieve_types(self):
+    def retrieve_types(self) -> list:
         return self.__load_yaml("types")
 
-    def __load_yaml(self, key):
+    def __load_yaml(self, key) -> list:
         f = open(f"lib/yamls/standing_data.yml")
         data = yaml.load(f, Loader=yaml.CLoader)
 
@@ -34,5 +34,5 @@ class StandingData:
 
         return self.__map(data[key])
 
-    def __map(self, data):
+    def __map(self, data) -> list:
         return [{"value": i} for i in data]
