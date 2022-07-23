@@ -97,7 +97,7 @@ class RetrievePoemService(BaseService):
             poem = Poem.objects.get(pk=self.id)
         except:
             raise ValidationError(
-                detail={"errors": f"No record with id {self.id} found."}
+                detail={"errors": [f"No record with id {self.id} found."]}
             )
 
         return {"poem": poem, "by-line": by_line}

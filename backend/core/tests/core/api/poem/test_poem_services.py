@@ -109,7 +109,7 @@ def test_retrieve_poem_record_not_found(client):
 
     assert response.status_code == HTTP_400_BAD_REQUEST
     assert isinstance(response.data, dict)
-    assert response.data["errors"] == "No record with id xx found."
+    assert response.data["errors"][0] == "No record with id xx found."
 
 
 @pytest.mark.django_db
