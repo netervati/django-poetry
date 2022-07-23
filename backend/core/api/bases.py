@@ -34,3 +34,35 @@ class BaseController(ViewSet):
     @property
     def _serializer_list(self):
         return ListSerializer
+
+
+class BaseService:
+    """
+    Base service for all api services.
+    """
+
+    def _validate_params(self, validations):
+        errors = []
+
+        if "missing_params" in validations:
+            errors.append(self.__require_params)
+
+        if "blank_params" in validations:
+            errors += self.__blank_params
+
+        return errors
+
+    @property
+    def __blank_params(self):
+        blank_errors = []
+
+        for key, val in self.params.items():
+            if not val.strip():
+                blank_errors.append({f"{key}": f"Parameter should not be blank."})
+
+        return blank_errors
+
+    @property
+    def __require_params(self):
+        if len(self.params) == 0:
+            return "You are missing valid query parameters."

@@ -1,6 +1,7 @@
 from rest_framework.exceptions import ValidationError
 
 
+from api.bases import BaseService
 from db.models import Poem
 from lib.mappers import (
     ALLOWED_ATTR_FOR_POEM,
@@ -75,7 +76,7 @@ class RetrievePoemsLikeService:
         return params
 
 
-class RetrievePoemService:
+class RetrievePoemService(BaseService):
     """
     Retrieves specific poem.
     """
@@ -85,7 +86,7 @@ class RetrievePoemService:
         self.params = clean_params(params.query_params, ALLOWED_ATTR_FOR_POEM)
 
     def run(self):
-        if errors := self.__validate_params():
+        if errors := self._validate_params(["blank_params"]):
             raise ValidationError(detail={"errors": errors})
 
         by_line = (
@@ -100,12 +101,3 @@ class RetrievePoemService:
             )
 
         return {"poem": poem, "by-line": by_line}
-
-    def __validate_params(self):
-        errors = []
-
-        for key, val in self.params.items():
-            if not val.strip():
-                errors.append({f"{key}": f"Parameter should not be blank."})
-
-        return errors

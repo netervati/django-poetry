@@ -95,7 +95,16 @@ def test_retrieve_poems_like(client, poem):
 
 
 @pytest.mark.django_db
-def test_retrieve_poem_record_not_found(client, poem):
+def test_retrieve_poem_with_blank_params(client, poem):
+    response = client.get(retrieve_poem(poem.id), data={"by-line": ""})
+
+    assert response.status_code == HTTP_400_BAD_REQUEST
+    assert isinstance(response.data, dict)
+    assert response.data["errors"][0]["by-line"] == "Parameter should not be blank."
+
+
+@pytest.mark.django_db
+def test_retrieve_poem_record_not_found(client):
     response = client.get(retrieve_poem("xx"))
 
     assert response.status_code == HTTP_400_BAD_REQUEST
