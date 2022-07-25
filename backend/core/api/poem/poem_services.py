@@ -12,18 +12,23 @@ from lib.utils import clean_params
 
 
 class ListPoemService(BaseService):
-    def _fix_filters(self, params):
+    def _clean(self, params, allowed_attributes):
         by_line = False
 
+        cleaned_params = clean_params(params, allowed_attributes)
+
+        if "by-line" in cleaned_params:
+            by_line = cleaned_params["by-line"] == "true"
+            cleaned_params.pop("by-line")
+
+        return (cleaned_params, by_line)
+
+    def _fix_filters(self, params):
         if "author" in params:
             params["author__name"] = params["author"]
             params.pop("author")
 
-        if "by-line" in params:
-            by_line = params["by-line"] == "true"
-            params.pop("by-line")
-
-        return (params, by_line)
+        return params
 
 
 class RetrievePoemsExactService(ListPoemService):
@@ -32,15 +37,17 @@ class RetrievePoemsExactService(ListPoemService):
     """
 
     def __init__(self, params):
-        self.params = clean_params(params.query_params, ALLOWED_ATTR_FOR_POEM_EXACT)
+        self.params, self.by_line = self._clean(
+            params.query_params, ALLOWED_ATTR_FOR_POEM_EXACT
+        )
 
     def run(self):
         if errors := self._validate(["missing_params", "blank_params"]):
             raise ValidationError(detail={"errors": errors})
 
-        self.params, by_line = self._fix_filters(self.params)
+        self.params = self._fix_filters(self.params)
 
-        return {"poem": Poem.objects.filter(**self.params), "by-line": by_line}
+        return {"poem": Poem.objects.filter(**self.params), "by-line": self.by_line}
 
 
 class RetrievePoemsLikeService(ListPoemService):
@@ -49,17 +56,19 @@ class RetrievePoemsLikeService(ListPoemService):
     """
 
     def __init__(self, params):
-        self.params = clean_params(params.query_params, ALLOWED_ATTR_FOR_POEM_LIKE)
+        self.params, self.by_line = self._clean(
+            params.query_params, ALLOWED_ATTR_FOR_POEM_LIKE
+        )
 
     def run(self):
         if errors := self._validate(["missing_params", "blank_params"]):
             raise ValidationError(detail={"errors": errors})
 
-        self.params, by_line = self._fix_filters(self.params)
+        self.params = self._fix_filters(self.params)
 
         return {
             "poem": Poem.objects.filter(**self._like(self.params)),
-            "by-line": by_line,
+            "by-line": self.by_line,
         }
 
 
