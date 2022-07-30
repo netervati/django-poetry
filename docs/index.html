@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DjangoPoetry</title>
+    <link href="./prism.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="./prism.js" defer></script>
+    <script src="./site.js" defer></script>
+  </head>
+  <body>
+    <nav class="bg-light mb-5 navbar navbar-light shadow-sm sticky-top">
+      <div class="container-fluid">
+        <form class="d-flex">
+          <select onchange="switchLang(this.value)">
+            <option selected value="cUrl">cUrl</option>
+            <option value="python">Python</option>
+          </select>
+        </form>
+      </div>
+    </nav>
+    <main class="container-fluid">
+      <div class="row">
+        <section class="col-12 text-center">
+          <h1 class="mt-5 fw-bold">DjangoPoetry</h1>
+          <h5>The API for poetry enthusiasts</h5>
+        </section>
+      </div>
+      <div class="row mt-5">
+        <section class="col-12 text-center">
+          <ul class="list-inline">
+            <li class="list-inline-item p-3" role="button" onclick="displayTab('about')">
+              <a id="linkAboutTab" href="#about" class="text-decoration-none">About</a>
+            </li>
+            <li class="list-inline-item p-3" role="button" onclick="displayTab('docs')">
+              <a id="linkDocsTab" href="#docs" class="text-decoration-none">Docs</a>
+            </li>
+            <li class="list-inline-item p-3" role="button"><a class="text-decoration-none text-dark" href="https://github.com/netervati/django-poetry">Repo</a></li>
+          </ul>
+        </section>
+      </div>
+      <div class="row mt-5 text-white" id="aboutTab" hidden="true">
+        <section class="col-12">
+          <div class="row">
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+            <section class="col-12 col-sm-8 col-md-6">
+              <pre data class="border p-3 rounded" lang-tag="cUrl"><code class="language-bash">curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET "http://127.0.0.1:8000/api/poems/exact/?by-line=true&title=Love%20Is%20A%20Sickness%20Full%20of%20Woes"</code></pre>
+              <pre data class="border p-3 rounded" lang-tag="python"><code class="language-py">import requests
+
+url = "http://127.0.0.1:8000/api/ages/"
+headers = { "Content-Type": "application/json" }
+params = {"by-line": True, "title": "Love Is A Sickness Full of Woes"}
+response = requests.request("GET", url, headers=headers, params=params)
+
+print(response.text)</code></pre>
+              <pre data class="border p-3 rounded" lang-tag="ruby"><code class="language-ruby">
+
+              </code></pre>
+            </section>
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+          </div>
+          <div class="row">
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+            <section class="col-12 col-sm-8 col-md-6">
+              <pre class="border p-3 rounded"><code class="language-bash">{
+  "total_records": 1,
+  "attributes": [
+      {
+          "id": "f3ed590e-51e4-4493-85c6-55de2e07fe3c",
+          "age": "Renaissance",
+          "author_details": {
+              "id": "4c4df037-26f3-4c7c-bab2-ed7c39e5b479",
+              "name": "SAMUEL DANIEL"
+          },
+          "lines": [
+              "Love is a sickness full of woes,",
+              "All remedies refusing;",
+              "A plant that with most cutting grows,",
+              "Most barren with best using.",
+              "Why so?",
+              "More we enjoy it, more it dies;",
+              "If not enjoyed, it sighting cries,",
+              "Heigh ho!",
+              "Love is a torment of the mind,",
+              "A tempest everlasting;",
+              "And Jove hath made it of a kind",
+              "Not well, not full, nor fasting.",
+              "Why so?",
+              "More we enjoy it, more it dies;",
+              "If not enjoyed, it sighing cries,",
+              "Heigh ho!"
+          ],
+          "title": "Love Is A Sickness Full of Woes",
+          "type": "Love"
+      }
+  ]
+}</code></pre>
+            </section>
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+          </div>
+        </section>
+      </div>
+      <div class="row mt-5" id="docsTab" hidden="true">
+        <section class="col-12">
+          <div class="row">
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+            <section class="col-12 col-sm-8 col-md-6">
+              <h4>Introduction</h4>
+              <hr>
+              <p>The API accepts GET requests and returns data in JSON format. When a request is successful, the endpoint returns <code>attribute</code> with the requested data as its value. For endpoints that return lists of records, the response includes <code>total_records</code>.</p>
+            </section>
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+          </div>
+        </section>
+        <section class="col-12">
+          <div class="row mt-5">
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+            <section class="col-12 col-sm-8 col-md-6">
+              <h4>Endpoints</h4>
+              <hr>
+              <ul>
+                <li>Ages
+                  <ul>
+                    <li>Retrieve ages</li>
+                  </ul>
+                </li>
+                <li>Authors
+                  <ul>
+                    <li>Retrieve authors</li>
+                    <li>Retrieve author by ID</li>
+                  </ul>
+                </li>
+                <li>Poems
+                  <ul>
+                    <li>Retrieve poems (exact)</li>
+                    <li>Retrieve poems (like)</li>
+                    <li>Retrieve poem by ID</li>
+                  </ul>
+                </li>
+                <li>Types
+                  <ul>
+                    <li>Retrieve types</li>
+                  </ul>
+                </li>
+              </ul>
+            </section>
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+          </div>
+        </section>
+        <section class="col-12">
+          <div class="row mt-5">
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+            <section class="col-12 col-sm-8 col-md-6">
+              <h4>Ages</h4>
+              <hr>
+              <p>This refers to the eras during which the poems were composed.</p>
+            </section>
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+          </div>
+          <div class="row mt-2">
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+            <section class="col-12 col-sm-8 col-md-6">
+              <h5>Retrieve Ages</h5>
+              <pre class="border p-3 rounded"><code class="language-bash">http://127.0.0.1:8000/api/ages/</code></pre>
+            </section>
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+          </div>
+          <div class="row mt-2">
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+            <section class="col-12 col-sm-8 col-md-6">
+              <p>Example Request:</p>
+              <pre class="border p-3 rounded" lang-tag="cUrl"><code class="language-bash">curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET "http://127.0.0.1:8000/api/ages/"</code></pre>
+              <pre data class="border p-3 rounded" lang-tag="python"><code class="language-py">import requests
+
+url = "http://127.0.0.1:8000/api/ages/"
+headers = { "Content-Type": "application/json" }
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)</code></pre>
+              <p>Example Response:</p>
+              <pre class="border p-3 rounded"><code class="language-bash">{
+  "total_records": 1,
+  "attributes": [
+      {
+          "value": "Modern"
+      }
+  ]
+}</code></pre>
+            </section>
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+          </div>
+        </section>
+        <section class="col-12">
+          <div class="row mt-5">
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+            <section class="col-12 col-sm-8 col-md-6">
+              <h4>Authors</h4>
+              <hr>
+              <p>The endpoints listed under Authors provide names of poets.</p>
+            </section>
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+          </div>
+          <div class="row mt-2">
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+            <section class="col-12 col-sm-8 col-md-6">
+              <h5>Retrieve Authors</h5>
+              <pre class="border p-3 rounded"><code class="language-bash">http://127.0.0.1:8000/api/authors/?name={name}</code></pre>
+            </section>
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+          </div>
+          <div class="row mt-2">
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+            <section class="col-12 col-sm-8 col-md-6">
+              <table class="table table-condensed">
+                <thead  class="text-center">
+                  <tr>
+                    <th>Parameter</th>
+                    <th>Rules</th>
+                    <th>Details</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>name</td>
+                    <td>
+                      <ul>
+                        <li>Optional</li>
+                        <li>Cannot be blank</li>
+                      </ul>
+                    </td>
+                    <td>Used to find Authors with name that contains this parameter</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>Example Request:</p>
+              <pre class="border p-3 rounded" lang-tag="cUrl"><code class="language-bash">curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET "http://127.0.0.1:8000/api/authors/?name=John"</code></pre>
+              <pre data class="border p-3 rounded" lang-tag="python"><code class="language-py">import requests
+
+url = "http://127.0.0.1:8000/api/authors/"
+headers = { "Content-Type": "application/json" }
+params = {"name": "John"}
+response = requests.request("GET", url, headers=headers, params=params)
+
+print(response.text)</code></pre>
+              <p>Example Response:</p>
+              <pre class="border p-3 rounded"><code class="language-bash">{
+  "total_records": 2,
+  "attributes": [
+      {
+          "id": "07d8feaf-4e8b-4261-930c-afcff3d1285e",
+          "name": "JOHN DOE"
+      },
+      {
+          "id": "2e7d2624-7965-4e43-b260-bbfa1b61125a",
+          "name": "JOHN WATT"
+      }
+  ]
+}</code></pre>
+            </section>
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+          </div>
+          <div class="row mt-2">
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+            <section class="col-12 col-sm-8 col-md-6">
+              <h5>Retrieve Author by ID</h5>
+              <pre class="border p-3 rounded"><code class="language-bash">http://127.0.0.1:8000/api/authors/{id}</code></pre>
+            </section>
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+          </div>
+          <div class="row mt-2">
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+            <section class="col-12 col-sm-8 col-md-6">
+              <table class="table table-condensed">
+                <thead  class="text-center">
+                  <tr>
+                    <th>Parameter</th>
+                    <th>Rules</th>
+                    <th>Details</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>id</td>
+                    <td>
+                      <ul>
+                        <li>Required</li>
+                      </ul>
+                    </td>
+                    <td>Used to find Author with ID that matches this parameter</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>Example Request:</p>
+              <pre class="border p-3 rounded" lang-tag="cUrl"><code class="language-bash">curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET "http://127.0.0.1:8000/api/authors/07d8feaf-4e8b-4261-930c-afcff3d1285"</code></pre>
+              <pre data class="border p-3 rounded" lang-tag="python"><code class="language-py">import requests
+
+author_id = "07d8feaf-4e8b-4261-930c-afcff3d1285"
+url = f"http://127.0.0.1:8000/api/authors/{author_id}"
+headers = { "Content-Type": "application/json" }
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)</code></pre>
+              <p>Example Response:</p>
+              <pre class="border p-3 rounded"><code class="language-bash">{
+  "attributes": {
+      "id": "07d8feaf-4e8b-4261-930c-afcff3d1285e",
+      "name": "JOHN DOE"
+  }
+}</code></pre>
+            </section>
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+          </div>
+        </section>
+        <section class="col-12">
+          <div class="row mt-5">
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+            <section class="col-12 col-sm-8 col-md-6">
+              <h4>Poems</h4>
+              <hr>
+              <p>Returns data of poems.</p>
+            </section>
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+          </div>
+          <div class="row mt-2">
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+            <section class="col-12 col-sm-8 col-md-6">
+              <h5>Retrieve Poems (Exact)</h5>
+              <pre class="border p-3 rounded"><code class="language-bash">http://127.0.0.1:8000/api/poems/exact/?age={age}&author={author}&by-line={by-line}&title={title}&type={type}</code></pre>
+            </section>
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+          </div>
+          <div class="row mt-2">
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+            <section class="col-12 col-sm-8 col-md-6">
+              <ul>
+                <li>A minimum of 1 parameter, excluding <code>by-line</code>, must be passed to this endpoint.</li>
+              </ul>
+              <table class="table table-condensed">
+                <thead class="text-center">
+                  <tr>
+                    <th>Parameter</th>
+                    <th>Rules</th>
+                    <th>Cannot be blank</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>age</td>
+                    <td>
+                      <ul>
+                        <li>Optional</li>
+                        <li>Cannot be blank</li>
+                      </ul>
+                    </td>
+                    <td>Used to find Poems with age that matches this parameter</td>
+                  </tr>
+                  <tr>
+                    <td>author</td>
+                    <td>
+                      <ul>
+                        <li>Optional</li>
+                        <li>Cannot be blank</li>
+                      </ul>
+                    </td>
+                    <td>Used to find Poems with author that matches this parameter</td>
+                  </tr>
+                  <tr>
+                    <td>by-line</td>
+                    <td>
+                      <ul>
+                        <li>Optional</li>
+                        <li>Detects if value is <code>true</code> or not</li>
+                      </ul>
+                    </td>
+                    <td>Used to separate each line of poem to array</td>
+                  </tr>
+                  <tr>
+                    <td>title</td>
+                    <td>
+                      <ul>
+                        <li>Optional</li>
+                        <li>Cannot be blank</li>
+                      </ul>
+                    </td>
+                    <td>Used to find Poems with title that matches this parameter</td>
+                  </tr>
+                  <tr>
+                    <td>type</td>
+                    <td>
+                      <ul>
+                        <li>Optional</li>
+                        <li>Cannot be blank</li>
+                      </ul>
+                    </td>
+                    <td>Used to find Poems with type that matches this parameter</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>Example Request:</p>
+              <pre class="border p-3 rounded" lang-tag="cUrl"><code class="language-bash">curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET "http://127.0.0.1:8000/api/poems/exact/?type=Love"</code></pre>
+              <pre data class="border p-3 rounded" lang-tag="python"><code class="language-py">import requests
+
+url = "http://127.0.0.1:8000/api/poems/exact/"
+headers = { "Content-Type": "application/json" }
+params = {"type": "Love"}
+response = requests.request("GET", url, headers=headers, params=params)
+
+print(response.text)</code></pre>
+              <p>Example Response:</p>
+              <pre class="border p-3 rounded"><code class="language-bash">{
+  "total_records": 1,
+  "attributes": [
+      {
+          "id": "78c42030-79ef-4581-b200-45d34074cf16",
+          "age": "Renaissance",
+          "author_details": {
+              "id": "1805581f-da6c-4fd1-adb3-5ed81c62163e",
+              "name": "JOHN DOE"
+          },
+          "content": "For love exists,\neverlasting it shall be.",
+          "title": "The Oath",
+          "type": "Love"
+      }
+  ]
+}</code></pre>
+              <p>Example Response if by-line is set to true:</p>
+              <pre class="border p-3 rounded"><code class="language-bash">{
+  "total_records": 1,
+  "attributes": [
+      {
+        "id": "78c42030-79ef-4581-b200-45d34074cf16",
+        "age": "Renaissance",
+        "author_details": {
+            "id": "1805581f-da6c-4fd1-adb3-5ed81c62163e",
+            "name": "JOHN DOE"
+        },
+        "lines": [
+            "For love exists,", 
+            "everlasting it will be."
+        ],
+        "title": "The Oath",
+        "type": "Love"
+      }
+  ]
+}</code></pre>
+            </section>
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+          </div>
+          
+
+
+
+          <div class="row mt-2">
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+            <section class="col-12 col-sm-8 col-md-6">
+              <h5>Retrieve Poems (Like)</h5>
+              <pre class="border p-3 rounded"><code class="language-bash">http://127.0.0.1:8000/api/poems/like/?age={age}&author={author}&by-line={by-line}&title={title}&type={type}</code></pre>
+            </section>
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+          </div>
+          <div class="row mt-2">
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+            <section class="col-12 col-sm-8 col-md-6">
+              <ul>
+                <li>A minimum of 1 parameter, excluding <code>by-line</code>, must be passed to this endpoint.</li>
+              </ul>
+              <table class="table table-condensed">
+                <thead class="text-center">
+                  <tr>
+                    <th>Parameter</th>
+                    <th>Rules</th>
+                    <th>Cannot be blank</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>age</td>
+                    <td>
+                      <ul>
+                        <li>Optional</li>
+                        <li>Cannot be blank</li>
+                      </ul>
+                    </td>
+                    <td>Used to find Poems with age that contains this parameter</td>
+                  </tr>
+                  <tr>
+                    <td>author</td>
+                    <td>
+                      <ul>
+                        <li>Optional</li>
+                        <li>Cannot be blank</li>
+                      </ul>
+                    </td>
+                    <td>Used to find Poems with author that contains this parameter</td>
+                  </tr>
+                  <tr>
+                    <td>by-line</td>
+                    <td>
+                      <ul>
+                        <li>Optional</li>
+                        <li>Detects if value is <code>true</code> or not</li>
+                      </ul>
+                    </td>
+                    <td>Used to separate each line of poem to array</td>
+                  </tr>
+                  <tr>
+                    <td>content</td>
+                    <td>
+                      <ul>
+                        <li>Optional</li>
+                        <li>Cannot be blank</li>
+                      </ul>
+                    </td>
+                    <td>Used to find Poems with content that contains this parameter</td>
+                  </tr>
+                  <tr>
+                    <td>title</td>
+                    <td>
+                      <ul>
+                        <li>Optional</li>
+                        <li>Cannot be blank</li>
+                      </ul>
+                    </td>
+                    <td>Used to find Poems with title that contains this parameter</td>
+                  </tr>
+                  <tr>
+                    <td>type</td>
+                    <td>
+                      <ul>
+                        <li>Optional</li>
+                        <li>Cannot be blank</li>
+                      </ul>
+                    </td>
+                    <td>Used to find Poems with type that contains this parameter</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>Example Request:</p>
+              <pre class="border p-3 rounded" lang-tag="cUrl"><code class="language-bash">curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET "http://127.0.0.1:8000/api/poems/like/?content=love"</code></pre>
+              <pre data class="border p-3 rounded" lang-tag="python"><code class="language-py">import requests
+
+url = "http://127.0.0.1:8000/api/poems/like/"
+headers = { "Content-Type": "application/json" }
+params = {"content": "love"}
+response = requests.request("GET", url, headers=headers, params=params)
+
+print(response.text)</code></pre>
+              <p>Example Response:</p>
+              <pre class="border p-3 rounded"><code class="language-bash">{
+  "total_records": 1,
+  "attributes": [
+      {
+          "id": "78c42030-79ef-4581-b200-45d34074cf16",
+          "age": "Renaissance",
+          "author_details": {
+              "id": "1805581f-da6c-4fd1-adb3-5ed81c62163e",
+              "name": "JOHN DOE"
+          },
+          "content": "For love exists,\neverlasting it shall be.",
+          "title": "The Oath",
+          "type": "Love"
+      },
+      {
+          "id": "82109b84-e258-4487-9e60-da607557f781",
+          "age": "Renaissance",
+          "author_details": {
+              "id": "c8b04149-6e6e-46c9-b76b-789f3b4c82bf",
+              "name": "JOHN WATT"
+          },
+          "content": "It is without a doubt love that saves man.",
+          "title": "Saviour",
+          "type": "Love"
+      }
+  ]
+}</code></pre>
+            </section>
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+          </div>
+          <div class="row mt-2">
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+            <section class="col-12 col-sm-8 col-md-6">
+              <h5>Retrieve Poem by ID</h5>
+              <pre class="border p-3 rounded"><code class="language-bash">http://127.0.0.1:8000/api/poems/{id}</code></pre>
+            </section>
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+          </div>
+          <div class="row mt-2">
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+            <section class="col-12 col-sm-8 col-md-6">
+              <table class="table table-condensed">
+                <thead  class="text-center">
+                  <tr>
+                    <th>Parameter</th>
+                    <th>Rules</th>
+                    <th>Details</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>id</td>
+                    <td>
+                      <ul>
+                        <li>Required</li>
+                      </ul>
+                    </td>
+                    <td>Used to find Poem with ID that matches this parameter</td>
+                  </tr>
+                  <tr>
+                    <td>by-line</td>
+                    <td>
+                      <ul>
+                        <li>Optional</li>
+                        <li>Detects if value is <code>true</code> or not</li>
+                      </ul>
+                    </td>
+                    <td>Used to separate each line of poem to array</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>Example Request:</p>
+              <pre class="border p-3 rounded" lang-tag="cUrl"><code class="language-bash">curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET "http://127.0.0.1:8000/api/poems/78c42030-79ef-4581-b200-45d34074cf16"</code></pre>
+              <pre data class="border p-3 rounded" lang-tag="python"><code class="language-py">import requests
+
+author_id = "07d8feaf-4e8b-4261-930c-afcff3d1285"
+url = f"http://127.0.0.1:8000/api/poems/{poem_id}"
+headers = { "Content-Type": "application/json" }
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)</code></pre>
+              <p>Example Response:</p>
+              <pre class="border p-3 rounded"><code class="language-bash">{
+  "attributes": {
+      "id": "78c42030-79ef-4581-b200-45d34074cf16",
+      "age": "Renaissance",
+      "author_details": {
+          "id": "1805581f-da6c-4fd1-adb3-5ed81c62163e",
+          "name": "JOHN DOE"
+      },
+      "content": "For love exists,\neverlasting it shall be.",
+      "title": "The Oath",
+      "type": "Love"
+  }
+}</code></pre>
+            </section>
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+          </div>
+        </section>
+        <section class="col-12">
+          <div class="row mt-5">
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+            <section class="col-12 col-sm-8 col-md-6">
+              <h4>Types</h4>
+              <hr>
+              <p>This refers to themes of the poems.</p>
+            </section>
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+          </div>
+          <div class="row mt-2">
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+            <section class="col-12 col-sm-8 col-md-6">
+              <h5>Retrieve Types</h5>
+              <pre class="border p-3 rounded"><code class="language-bash">http://127.0.0.1:8000/api/types/</code></pre>
+            </section>
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+          </div>
+          <div class="row mt-2">
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+            <section class="col-12 col-sm-8 col-md-6">
+              <p>Example Request:</p>
+              <pre class="border p-3 rounded" lang-tag="cUrl"><code class="language-bash">curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET "http://127.0.0.1:8000/api/types/"</code></pre>
+              <pre data class="border p-3 rounded" lang-tag="python"><code class="language-py">import requests
+
+url = "http://127.0.0.1:8000/api/types/"
+headers = { "Content-Type": "application/json" }
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)</code></pre>
+              <p>Example Response:</p>
+              <pre class="border p-3 rounded"><code class="language-bash">{
+  "total_records": 1,
+  "attributes": [
+      {
+          "value": "Nature"
+      }
+  ]
+}</code></pre>
+            </section>
+            <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
+          </div>
+        </section>
+      </div>
+    </main>
+    <footer class="mt-3 p-5 text-center">
+      <p>Programmed by <a href="https://github.com/netervati">@netervati</a></p>
+    </footer>
+  </body>
+</html>
