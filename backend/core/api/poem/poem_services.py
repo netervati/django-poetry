@@ -14,7 +14,6 @@ from lib.utils import clean_params
 class ListPoemService(BaseService):
     def _clean(self, params, allowed_attributes):
         by_line = False
-
         cleaned_params = clean_params(params, allowed_attributes)
 
         if "by-line" in cleaned_params:
@@ -45,9 +44,10 @@ class RetrievePoemsExactService(ListPoemService):
         if errors := self._validate(["missing_params", "blank_params"]):
             raise ValidationError(detail={"errors": errors})
 
-        self.params = self._fix_filters(self.params)
-
-        return {"poem": Poem.objects.filter(**self.params), "by-line": self.by_line}
+        return {
+            "poem": Poem.objects.filter(**self._fix_filters(self.params)),
+            "by-line": self.by_line,
+        }
 
 
 class RetrievePoemsLikeService(ListPoemService):
@@ -64,10 +64,8 @@ class RetrievePoemsLikeService(ListPoemService):
         if errors := self._validate(["missing_params", "blank_params"]):
             raise ValidationError(detail={"errors": errors})
 
-        self.params = self._fix_filters(self.params)
-
         return {
-            "poem": Poem.objects.filter(**self._like(self.params)),
+            "poem": Poem.objects.filter(**self._like(self._fix_filters(self.params))),
             "by-line": self.by_line,
         }
 
@@ -85,15 +83,15 @@ class RetrievePoemService(BaseService):
         if errors := self._validate(["blank_params"]):
             raise ValidationError(detail={"errors": errors})
 
-        by_line = (
-            self.params["by-line"] == "true" if "by-line" in self.params else False
-        )
-
         try:
             poem = Poem.objects.get(pk=self.id)
         except:
             raise ValidationError(
                 detail={"errors": [f"No record with id {self.id} found."]}
             )
+
+        by_line = (
+            self.params["by-line"] == "true" if "by-line" in self.params else False
+        )
 
         return {"poem": poem, "by-line": by_line}

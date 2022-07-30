@@ -1,6 +1,10 @@
 """
 Serves as the module for utilities in the API.
 """
+from api.serializers import ListSerializer, RecordSerializer
+from lib.mappers import ListMapper, RecordMapper
+
+
 import yaml
 
 
@@ -9,7 +13,6 @@ def clean_params(kwargs: dict, mapper: list) -> dict:
     Removes parameters that do not match
     the mapper attributes.
     """
-
     params = {}
 
     for key, val in kwargs.items():
@@ -17,6 +20,16 @@ def clean_params(kwargs: dict, mapper: list) -> dict:
             params[key] = val
 
     return params
+
+
+def render(data):
+    """
+    Formats API service results
+    """
+    if isinstance(data, list):
+        return ListSerializer(ListMapper(data).to_dict()).data
+
+    return RecordSerializer(RecordMapper(data).to_dict()).data
 
 
 class StandingData:

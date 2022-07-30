@@ -1,13 +1,15 @@
 from django.urls import path
+from rest_framework.response import Response
+from rest_framework.viewsets import ViewSet
 
 
 from api.age.age_services import RetrieveAgesService
-from api.bases import BaseController
+from lib.utils import render
 
 
-class AgeController(BaseController):
+class AgeController(ViewSet):
     def retrieve(self, request):
-        return self._render_list(RetrieveAgesService().run())
+        return Response(render(RetrieveAgesService().run()))
 
 
 urlpatterns = [

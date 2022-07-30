@@ -1,37 +1,4 @@
-from rest_framework.response import Response
-from rest_framework.viewsets import ViewSet
-
-
-from api.serializers import ListSerializer, RecordSerializer
-from lib.mappers import ListMapper, RecordMapper
-
-
-class BaseController(ViewSet):
-    def _render(self, data):
-        mapper = self._mapper(data).to_dict()
-
-        serializer = self._serializer(mapper).data
-
-        return Response(serializer)
-
-    def _render_list(self, data):
-        return Response(self._serializer_list(self._mapper_list(data).to_dict()).data)
-
-    @property
-    def _mapper(self):
-        return RecordMapper
-
-    @property
-    def _mapper_list(self):
-        return ListMapper
-
-    @property
-    def _serializer(self):
-        return RecordSerializer
-
-    @property
-    def _serializer_list(self):
-        return ListSerializer
+from lib.utils import render
 
 
 class BaseService:
@@ -70,7 +37,6 @@ class BaseService:
 
     @property
     def __require_params(self):
-        if len(self.params) == 0:
-            return ["You are missing valid query parameters."]
-
-        return []
+        return (
+            ["You are missing valid query parameters."] if len(self.params) == 0 else []
+        )

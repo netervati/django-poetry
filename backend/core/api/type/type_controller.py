@@ -1,13 +1,15 @@
 from django.urls import path
+from rest_framework.response import Response
+from rest_framework.viewsets import ViewSet
 
 
 from api.type.type_services import RetrieveTypesService
-from api.bases import BaseController
+from lib.utils import render
 
 
-class TypeController(BaseController):
+class TypeController(ViewSet):
     def retrieve(self, request):
-        return self._render_list(RetrieveTypesService().run())
+        return Response(render(RetrieveTypesService().run()))
 
 
 urlpatterns = [
