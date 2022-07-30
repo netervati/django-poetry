@@ -1,4 +1,4 @@
-from lib.utils import StandingData
+from lib.standing_data import retrieve_standing_data
 
 
 class RetrieveTypesService:
@@ -7,4 +7,4 @@ class RetrieveTypesService:
     """
 
     def run(self):
-        return StandingData().retrieve_types()
+        return retrieve_standing_data("types")

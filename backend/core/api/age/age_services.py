@@ -1,4 +1,4 @@
-from lib.utils import StandingData
+from lib.standing_data import retrieve_standing_data
 
 
 class RetrieveAgesService:
@@ -7,4 +7,4 @@ class RetrieveAgesService:
     """
 
     def run(self):
-        return StandingData().retrieve_ages()
+        return retrieve_standing_data("ages")

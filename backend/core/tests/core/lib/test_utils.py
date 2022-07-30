@@ -1,4 +1,4 @@
-from lib.mappers import (
+from lib.rules import (
     ALLOWED_ATTR_FOR_AUTHOR,
     ALLOWED_ATTR_FOR_POEM_EXACT,
     ALLOWED_ATTR_FOR_POEM_LIKE,

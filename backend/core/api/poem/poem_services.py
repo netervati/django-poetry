@@ -1,78 +1,84 @@
 from rest_framework.exceptions import ValidationError
 
 
-from api.bases import BaseService
 from db.models import Poem
-from lib.mappers import (
+from lib.rules import (
     ALLOWED_ATTR_FOR_POEM,
     ALLOWED_ATTR_FOR_POEM_EXACT,
     ALLOWED_ATTR_FOR_POEM_LIKE,
 )
-from lib.utils import clean_params
+from lib.utils import clean_params, match_like, Validation
 
 
-class ListPoemService(BaseService):
-    def _clean(self, params, allowed_attributes):
-        by_line = False
+def remove_not_required(params, allowed_attributes: list) -> tuple:
+    """
+    Removes any non-required parameters
+    before running the validation.
+    """
+    by_line = False
+    cleaned_params = clean_params(params, allowed_attributes)
 
-        cleaned_params = clean_params(params, allowed_attributes)
+    if "by-line" in cleaned_params:
+        by_line = cleaned_params["by-line"] == "true"
+        cleaned_params.pop("by-line")
 
-        if "by-line" in cleaned_params:
-            by_line = cleaned_params["by-line"] == "true"
-            cleaned_params.pop("by-line")
-
-        return (cleaned_params, by_line)
-
-    def _fix_filters(self, params):
-        if "author" in params:
-            params["author__name"] = params["author"]
-            params.pop("author")
-
-        return params
+    return (cleaned_params, by_line)
 
 
-class RetrievePoemsExactService(ListPoemService):
+def set_filter(params) -> dict:
+    """
+    Adjusts filter name for objects
+    """
+    if "author" in params:
+        params["author__name"] = params["author"]
+        params.pop("author")
+
+    return params
+
+
+class RetrievePoemsExactService:
     """
     Retrieves the poems based exactly on the query parameters.
     """
 
     def __init__(self, params):
-        self.params, self.by_line = self._clean(
+        self.params, self.by_line = remove_not_required(
             params.query_params, ALLOWED_ATTR_FOR_POEM_EXACT
         )
+        self.validation = Validation(self.params)
 
     def run(self):
-        if errors := self._validate(["missing_params", "blank_params"]):
+        if errors := self.validation.run(["missing_params", "blank_params"]):
             raise ValidationError(detail={"errors": errors})
 
-        self.params = self._fix_filters(self.params)
+        return {
+            "poem": Poem.objects.filter(**set_filter(self.params)),
+            "by-line": self.by_line,
+        }
 
-        return {"poem": Poem.objects.filter(**self.params), "by-line": self.by_line}
 
-
-class RetrievePoemsLikeService(ListPoemService):
+class RetrievePoemsLikeService:
     """
     Retrieves the poems with attributes like query parameters.
     """
 
     def __init__(self, params):
-        self.params, self.by_line = self._clean(
+        self.params, self.by_line = remove_not_required(
             params.query_params, ALLOWED_ATTR_FOR_POEM_LIKE
         )
+        self.validation = Validation(self.params)
 
     def run(self):
-        if errors := self._validate(["missing_params", "blank_params"]):
+        if errors := self.validation.run(["missing_params", "blank_params"]):
             raise ValidationError(detail={"errors": errors})
 
-        self.params = self._fix_filters(self.params)
-
         return {
-            "poem": Poem.objects.filter(**self._like(self.params)),
+            "poem": Poem.objects.filter(**match_like(set_filter(self.params))),
             "by-line": self.by_line,
         }
 
 
-class RetrievePoemService(BaseService):
+class RetrievePoemService:
     """
     Retrieves specific poem.
     """
@@ -80,14 +86,11 @@ class RetrievePoemService(BaseService):
     def __init__(self, id, params):
         self.id = id
         self.params = clean_params(params.query_params, ALLOWED_ATTR_FOR_POEM)
+        self.validation = Validation(self.params)
 
     def run(self):
-        if errors := self._validate(["blank_params"]):
+        if errors := self.validation.run(["blank_params"]):
             raise ValidationError(detail={"errors": errors})
-
-        by_line = (
-            self.params["by-line"] == "true" if "by-line" in self.params else False
-        )
 
         try:
             poem = Poem.objects.get(pk=self.id)
@@ -95,5 +98,9 @@ class RetrievePoemService(BaseService):
             raise ValidationError(
                 detail={"errors": [f"No record with id {self.id} found."]}
             )
+
+        by_line = (
+            self.params["by-line"] == "true" if "by-line" in self.params else False
+        )
 
         return {"poem": poem, "by-line": by_line}
