@@ -2,7 +2,7 @@ from rest_framework.exceptions import ValidationError
 
 
 from db.models import Author
-from lib.mappers import ALLOWED_ATTR_FOR_AUTHOR
+from lib.rules import ALLOWED_ATTR_FOR_AUTHOR
 from lib.utils import clean_params, match_like, Validation
 
 

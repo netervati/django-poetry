@@ -1,5 +1,5 @@
 """
-API mappers
+Establishes rules in the API
 """
 ALLOWED_ATTR_FOR_AUTHOR: list = ["name"]
 ALLOWED_ATTR_FOR_POEM: list = ["by-line"]
