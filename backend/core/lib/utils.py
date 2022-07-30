@@ -5,9 +5,6 @@ from api.serializers import ListSerializer, RecordSerializer
 from lib.mappers import ListMapper, RecordMapper
 
 
-import yaml
-
-
 def clean_params(kwargs: dict, mapper: list) -> dict:
     """
     Removes parameters that do not match

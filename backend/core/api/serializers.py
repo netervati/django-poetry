@@ -1,6 +1,4 @@
 from rest_framework import serializers
-from rest_framework.utils.serializer_helpers import ReturnDict
-from typing import Union
 
 
 from db.models import Author, Poem
