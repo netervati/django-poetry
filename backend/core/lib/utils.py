@@ -22,6 +22,18 @@ def clean_params(kwargs: dict, mapper: list) -> dict:
     return params
 
 
+def match_like(params):
+    """
+    Applies LIKE SQL operator to params
+    """
+    new_params = {}
+
+    for key, val in params.items():
+        new_params[f"{key}__icontains"] = val
+
+    return new_params
+
+
 def render(data):
     """
     Formats API service results
@@ -49,3 +61,35 @@ class StandingData:
 
     def __map(self, data) -> list:
         return [{"value": i} for i in data]
+
+
+class Validation:
+    """
+    Handles validation of params in services
+    """
+    def __init__(self, params):
+        self.params = params
+
+    def run(self, validations):
+        errors = []
+
+        for i in validations:
+            errors.extend(getattr(self, f"_{i}"))
+
+        return errors
+
+    @property
+    def _blank_params(self):
+        blank_errors = []
+
+        for key, val in self.params.items():
+            if not val.strip():
+                blank_errors.append({f"{key}": f"Parameter should not be blank."})
+
+        return blank_errors
+
+    @property
+    def _missing_params(self):
+        return (
+            ["You are missing valid query parameters."] if len(self.params) == 0 else []
+        )
