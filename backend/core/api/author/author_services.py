@@ -1,30 +1,30 @@
 from rest_framework.exceptions import ValidationError
 
 
-from api.bases import BaseService
 from db.models import Author
 from lib.mappers import ALLOWED_ATTR_FOR_AUTHOR
-from lib.utils import clean_params
+from lib.utils import clean_params, match_like, Validation
 
 
-class RetrieveAuthorsService(BaseService):
+class RetrieveAuthorsService:
     """
     Retrieves the list of authors.
     """
 
     def __init__(self, params):
         self.params = clean_params(params.query_params, ALLOWED_ATTR_FOR_AUTHOR)
+        self.validation = Validation(self.params)
 
     def run(self):
-        if errors := self._validate(["missing_params", "blank_params"]):
+        if errors := self.validation.run(["missing_params", "blank_params"]):
             raise ValidationError(detail={"errors": errors})
 
-        return Author.objects.filter(**self._like(self.params))
+        return Author.objects.filter(**match_like(self.params))
 
 
 class RetrieveAuthorService:
     """
-    Retrieves specific author.
+    Retrieves specific author based on ID.
     """
 
     def __init__(self, id):
