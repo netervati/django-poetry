@@ -11,6 +11,10 @@ from lib.utils import clean_params, match_like, Validation
 
 
 def remove_not_required(params, allowed_attributes: list) -> tuple:
+    """
+    Removes any non-required parameters
+    before running the validation.
+    """
     by_line = False
     cleaned_params = clean_params(params, allowed_attributes)
 
@@ -22,6 +26,9 @@ def remove_not_required(params, allowed_attributes: list) -> tuple:
 
 
 def set_filter(params) -> dict:
+    """
+    Adjusts filter name for objects
+    """
     if "author" in params:
         params["author__name"] = params["author"]
         params.pop("author")
