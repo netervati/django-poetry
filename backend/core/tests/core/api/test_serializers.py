@@ -5,7 +5,7 @@ from api.serializers import (
     PoemSerializer,
     RecordSerializer,
 )
-from lib.mappers import ListMapper, RecordMapper
+from lib.utils import map_data
 from tests.fixtures import age, author, poem, user
 
 
@@ -48,7 +48,7 @@ def test_poem_serializer(poem):
 
 @pytest.mark.django_db
 def test_list_serializer(age):
-    list_mapper = ListMapper([age]).to_dict()
+    list_mapper = map_data([age], list=True)
     list_serializer = ListSerializer(list_mapper).data
 
     assert "total_records" in list_serializer
@@ -57,7 +57,7 @@ def test_list_serializer(age):
 
 @pytest.mark.django_db
 def test_record_serializer(age):
-    record_mapper = RecordMapper([age]).to_dict()
+    record_mapper = map_data([age])
     record_serializer = RecordSerializer(record_mapper).data
 
     assert "attributes" in record_serializer

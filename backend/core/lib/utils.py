@@ -2,7 +2,6 @@
 Serves as the module for utilities in the API.
 """
 from api.serializers import ListSerializer, RecordSerializer
-from lib.mappers import ListMapper, RecordMapper
 
 
 def clean_params(kwargs: dict, mapper: list) -> dict:
@@ -17,6 +16,20 @@ def clean_params(kwargs: dict, mapper: list) -> dict:
             params[key] = val
 
     return params
+
+
+def map_data(data, list=False):
+    """
+    Maps the API service results
+    """
+    base = {"total_records": 0, "attributes": data}
+
+    if list is False:
+        base.pop("total_records")
+    else:
+        base["total_records"] = len(data)
+
+    return base
 
 
 def match_like(params):
@@ -36,9 +49,9 @@ def render(data):
     Formats API service results
     """
     if isinstance(data, list):
-        return ListSerializer(ListMapper(data).to_dict()).data
+        return ListSerializer(map_data(data, list=True)).data
 
-    return RecordSerializer(RecordMapper(data).to_dict()).data
+    return RecordSerializer(map_data(data)).data
 
 
 class Validation:
