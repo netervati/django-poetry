@@ -1,14 +1,11 @@
-from django.urls import reverse
-from rest_framework.status import HTTP_200_OK
+from api.type.type_services import RetrieveTypesService
+from tests.fixtures import type
 
 
-import pytest
+base_path = "api.type.type_services."
 
 
-@pytest.mark.django_db
-def test_retrieve_types(client):
-    response = client.get(reverse("retrieve-types"))
+def test_retrieve_types(mocker, type):
+    mocker.patch(f"{base_path}retrieve_standing_data").return_value = [type]
 
-    assert response.status_code == HTTP_200_OK
-    assert isinstance(response.data, dict)
-    assert isinstance(response.data["attributes"], list)
+    assert RetrieveTypesService().run() == [type]

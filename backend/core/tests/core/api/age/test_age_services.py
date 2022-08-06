@@ -1,15 +1,11 @@
-from django.urls import reverse
-from rest_framework.status import HTTP_200_OK
+from api.age.age_services import RetrieveAgesService
+from tests.fixtures import age
 
 
-import pytest
+base_path = "api.age.age_services."
 
 
-# TO-DO feat_v1.0007: Mock lib.utils.StandingData
-@pytest.mark.django_db
-def test_retrieve_ages(client):
-    response = client.get(reverse("retrieve-ages"))
+def test_retrieve_ages(mocker, age):
+    mocker.patch(f"{base_path}retrieve_standing_data").return_value = age
 
-    assert response.status_code == HTTP_200_OK
-    assert isinstance(response.data, dict)
-    assert isinstance(response.data["attributes"], list)
+    assert RetrieveAgesService().run() == age
