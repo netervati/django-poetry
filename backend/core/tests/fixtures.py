@@ -40,3 +40,14 @@ def poem(author, user, faker):
 @pytest.fixture
 def type(faker):
     return {"value": faker.catch_phrase()}
+
+
+@pytest.fixture
+def fake_request():
+    return FakeRequest
+
+
+class FakeRequest:
+    @property
+    def query_params():
+        return

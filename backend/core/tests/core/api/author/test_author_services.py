@@ -1,62 +1,42 @@
-from django.urls import reverse
-from rest_framework.status import (
-    HTTP_200_OK,
-    HTTP_400_BAD_REQUEST,
-)
+from rest_framework.exceptions import ValidationError
 
 
-from tests.fixtures import author, user
+from api.author.author_services import RetrieveAuthorService, RetrieveAuthorsService
+from tests.fixtures import author, fake_request, user
 
 
 import pytest
 
 
-retrieve_authors_url = reverse("retrieve-authors")
+base_path = "api.author.author_services."
 
 
 @pytest.mark.django_db
-def test_retrieve_authors_with_blank_params(client):
-    response = client.get(retrieve_authors_url, data={"name": ""})
+def test_retrieve_authors_service(mocker, author, fake_request):
+    mocker.patch(f"{base_path}clean_params").return_value = None
+    mocker.patch(f"{base_path}Validation.run").return_value = None
+    mocker.patch(f"{base_path}match_like").return_value = {}
+    mocker.patch(f"{base_path}Author").objects.filter.return_value = author
 
-    assert response.status_code == HTTP_400_BAD_REQUEST
-    assert response.data["errors"][0]["name"] == "Parameter should not be blank."
+    subject = RetrieveAuthorsService(fake_request)
 
+    assert subject.run() == author
 
-@pytest.mark.django_db
-def test_retrieve_authors_with_no_return(client):
-    response = client.get(retrieve_authors_url, data={"name": "xxx"})
+    mocker.patch(f"{base_path}Validation.run").return_value = "error"
 
-    assert response.status_code == HTTP_200_OK
-    assert not response.data["attributes"]
-
-
-@pytest.mark.django_db
-def test_retrieve_authors(client, author):
-    response = client.get(retrieve_authors_url, data={"name": author.name})
-
-    assert response.status_code == HTTP_200_OK
-    assert isinstance(response.data, dict)
-    assert isinstance(response.data["attributes"], list)
-    assert response.data["total_records"] == 1
-    assert response.data["attributes"][0]["id"] == str(author.id)
-    assert response.data["attributes"][0]["name"] == author.name
+    with pytest.raises(ValidationError):
+        subject.run()
 
 
 @pytest.mark.django_db
-def test_retrieve_author_not_found(client):
-    id = "xxx"
-    response = client.get(reverse("retrieve-author", kwargs={"id": id}))
+def test_retrieve_author_service(mocker, author):
+    mocker.patch(f"{base_path}Author").objects.get.return_value = author
 
-    assert response.status_code == HTTP_400_BAD_REQUEST
-    assert isinstance(response.data, dict)
-    assert response.data["errors"] == [f"No record with id {id} found."]
+    subject = RetrieveAuthorService(author.id)
 
+    assert subject.run() == author
 
-@pytest.mark.django_db
-def test_retrieve_author(client, author):
-    response = client.get(reverse("retrieve-author", kwargs={"id": author.id}))
+    mocker.patch(f"{base_path}Author").objects.get.side_effect = ValidationError
 
-    assert response.status_code == HTTP_200_OK
-    assert isinstance(response.data, dict)
-    assert response.data["attributes"]["id"] == str(author.id)
-    assert response.data["attributes"]["name"] == author.name
+    with pytest.raises(ValidationError):
+        subject.run()

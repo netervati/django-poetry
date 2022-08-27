@@ -1,16 +1,13 @@
-from lib.rules import (
-    ALLOWED_ATTR_FOR_AUTHOR,
-    ALLOWED_ATTR_FOR_POEM_EXACT,
-    ALLOWED_ATTR_FOR_POEM_LIKE,
-)
-from lib.utils import clean_params
-from tests.fixtures import author, poem, user
+from lib.rules import ALLOWED_ATTR_FOR_AUTHOR
+from lib.utils import clean_params, match_like, Validation
+from tests.fixtures import author, user
+from tests.helpers import assert_attributes_not_present
 
 
 import pytest
 
 
-@pytest.fixture
+@pytest.mark.django_db
 def author_kwargs(author):
     author_dict = vars(author)
     author_dict["ignore"] = "test"
@@ -18,43 +15,30 @@ def author_kwargs(author):
     return author_dict
 
 
-@pytest.fixture
-def poem_kwargs(poem):
-    poem_dict = vars(poem)
-    poem_dict["ignore"] = "test"
-
-    return poem_dict
-
-
 @pytest.mark.django_db
-def test_clean_params_for_authors(author_kwargs):
-    params = clean_params(author_kwargs, ALLOWED_ATTR_FOR_AUTHOR)
+def test_clean_params(author):
+    params = clean_params(author_kwargs(author), ALLOWED_ATTR_FOR_AUTHOR)
 
-    assert "ignore" not in params
-    assert "created_at" not in params
-    assert "updated_at" not in params
-    assert "user_id" not in params
-
-
-@pytest.mark.django_db
-def test_clean_params_for_poem_exact(poem_kwargs):
-    params = clean_params(poem_kwargs, ALLOWED_ATTR_FOR_POEM_EXACT)
-
-    assert "content" not in params
-    assert "id" not in params
-    assert "ignore" not in params
-    assert "created_at" not in params
-    assert "updated_at" not in params
-    assert "user_id" not in params
+    assert_attributes_not_present(
+        ["ignore", "created_at", "updated_at", "user_id"], params
+    )
 
 
-@pytest.mark.django_db
-def test_clean_params_for_poem_like(poem_kwargs):
-    params = clean_params(poem_kwargs, ALLOWED_ATTR_FOR_POEM_LIKE)
+def test_match_like():
+    params = match_like({"test": "data"})
 
-    assert "content" in params
-    assert "id" not in params
-    assert "ignore" not in params
-    assert "created_at" not in params
-    assert "updated_at" not in params
-    assert "user_id" not in params
+    assert params["test__icontains"] == "data"
+
+
+def test_blank_validation():
+    params = Validation({"test": ""})
+    error = params.run(["blank_params"])
+
+    assert error[0] == {"test": "Parameter should not be blank."}
+
+
+def test_required_validation():
+    params = Validation({})
+    error = params.run(["missing_params"])
+
+    assert error[0] == "You are missing valid query parameters."

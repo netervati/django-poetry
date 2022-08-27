@@ -7,7 +7,7 @@ from api.serializers import (
 )
 from lib.utils import map_data
 from tests.fixtures import age, author, poem, user
-
+from tests.helpers import assert_attributes_present
 
 import pytest
 
@@ -16,7 +16,6 @@ import pytest
 def test_author_serializer(author):
     author_serializer = AuthorSerializer(author).data
 
-    assert isinstance(author_serializer, dict)
     assert "name" in author_serializer
 
 
@@ -24,26 +23,20 @@ def test_author_serializer(author):
 def test_poem_by_line_serializer(poem):
     poem_by_line_serializer = PoemByLineSerializer(poem).data
 
-    assert isinstance(poem_by_line_serializer, dict)
-    assert "id" in poem_by_line_serializer
-    assert "age" in poem_by_line_serializer
-    assert "author_details" in poem_by_line_serializer
-    assert "lines" in poem_by_line_serializer
-    assert "title" in poem_by_line_serializer
-    assert "type" in poem_by_line_serializer
+    assert_attributes_present(
+        ["id", "age", "author_details", "lines", "title", "type"],
+        poem_by_line_serializer,
+    )
 
 
 @pytest.mark.django_db
 def test_poem_serializer(poem):
     poem_serializer = PoemSerializer(poem).data
 
-    assert isinstance(poem_serializer, dict)
-    assert "id" in poem_serializer
-    assert "age" in poem_serializer
-    assert "author_details" in poem_serializer
-    assert "content" in poem_serializer
-    assert "title" in poem_serializer
-    assert "type" in poem_serializer
+    assert_attributes_present(
+        ["id", "age", "author_details", "content", "title", "type"],
+        poem_serializer,
+    )
 
 
 @pytest.mark.django_db
@@ -51,8 +44,7 @@ def test_list_serializer(age):
     list_mapper = map_data([age], list=True)
     list_serializer = ListSerializer(list_mapper).data
 
-    assert "total_records" in list_serializer
-    assert "attributes" in list_serializer
+    assert_attributes_present(["total_records", "attributes"], list_serializer)
 
 
 @pytest.mark.django_db
