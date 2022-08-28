@@ -21,6 +21,7 @@ pytest-mock = "*"
 whitenoise = "*"
 mysqlclient = "*"
 pymysql = "*"
+types-pymysql = "*"
 
 [dev-packages]
 
