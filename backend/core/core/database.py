@@ -11,6 +11,9 @@ import os
 load_dotenv(".env")
 
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
 def settings():
     db = os.getenv("DJANGO_DB")
 
@@ -24,8 +27,6 @@ def settings():
             "PORT": os.getenv("POSTGRESQL_DB_PORT"),
         }
     elif db == "sqlite3":
-        BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
         return {
             "ENGINE": "django.db.backends.sqlite3",
             "NAME": f"{BASE_DIR}/db.sqlite3",
