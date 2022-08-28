@@ -18,6 +18,7 @@ mypy = "*"
 django-stubs = {extras = ["0.971"], version = "*"}
 djangorestframework-stubs = {extras = ["0.971"], version = "*"}
 pytest-mock = "*"
+whitenoise = "*"
 
 [dev-packages]
 
