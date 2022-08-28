@@ -19,6 +19,9 @@ django-stubs = {extras = ["0.971"], version = "*"}
 djangorestframework-stubs = {extras = ["0.971"], version = "*"}
 pytest-mock = "*"
 whitenoise = "*"
+mysqlclient = "*"
+pymysql = "*"
+types-pymysql = "*"
 
 [dev-packages]
 
