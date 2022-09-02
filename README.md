@@ -2,6 +2,9 @@
 [DjangoPoetry](https://django-poetry.vercel.app/) is a public API that provides data of poems and poets for poetry enthusiasts. It follows the REST API structure and returns data in JSON format. It's easy to utilize and you can simply begin retrieving data using fetch, ajax, or axios without using any key or authentication.
 <br />
 
+# 🚨🚨 Project is currently in Hiatus 🚨🚨
+Due to Heroku's [new policy](https://blog.heroku.com/next-chapter#focus-on-mission-critical) and migration issues from sqlite3 to postgresql (production), I am putting this project on hiatus.
+
 ## Technologies Used
 
 |Purpose|Tool|
