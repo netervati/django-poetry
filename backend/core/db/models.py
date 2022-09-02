@@ -8,7 +8,9 @@ MAX_LENGTH = 100
 
 
 class Author(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.CharField(
+        primary_key=True, default=uuid.uuid4, editable=False, max_length=MAX_LENGTH
+    )
     name = models.CharField(max_length=MAX_LENGTH)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateField(auto_now=True)
@@ -16,7 +18,9 @@ class Author(models.Model):
 
 
 class Poem(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.CharField(
+        primary_key=True, default=uuid.uuid4, editable=False, max_length=MAX_LENGTH
+    )
     age = models.CharField(max_length=MAX_LENGTH)
     author = models.ForeignKey(Author, null=False, on_delete=models.CASCADE)
     content = models.TextField()
