@@ -23,6 +23,7 @@ function displayTab(tab){
     document.getElementById("linkAboutTab").classList = "text-decoration-none text-dark"
     document.getElementById("linkDocsTab").classList = "text-decoration-none"
   }
+  location.hash = tab
 }
 
 function switchLang(lang){

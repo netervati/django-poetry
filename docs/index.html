@@ -44,10 +44,10 @@
           <div class="row">
             <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
             <section class="col-12 col-sm-8 col-md-6">
-              <pre data class="border p-3 rounded" lang-tag="cUrl"><code class="language-bash">curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET "http://127.0.0.1:8000/api/poems/exact/?by-line=true&title=Love%20Is%20A%20Sickness%20Full%20of%20Woes"</code></pre>
+              <pre data class="border p-3 rounded" lang-tag="cUrl"><code class="language-bash">curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET "https://django-poetry.herokuapp.com/api/poems/exact/?by-line=true&title=Love%20Is%20A%20Sickness%20Full%20of%20Woes"</code></pre>
               <pre data class="border p-3 rounded" lang-tag="python"><code class="language-py">import requests
 
-url = "http://127.0.0.1:8000/api/ages/"
+url = "https://django-poetry.herokuapp.com/api/ages/"
 headers = { "Content-Type": "application/json" }
 params = {"by-line": True, "title": "Love Is A Sickness Full of Woes"}
 response = requests.request("GET", url, headers=headers, params=params)
@@ -161,7 +161,7 @@ print(response.text)</code></pre>
             <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
             <section class="col-12 col-sm-8 col-md-6">
               <h5>Retrieve Ages</h5>
-              <pre class="border p-3 rounded"><code class="language-bash">http://127.0.0.1:8000/api/ages/</code></pre>
+              <pre class="border p-3 rounded"><code class="language-bash">https://django-poetry.herokuapp.com/api/ages/</code></pre>
             </section>
             <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
           </div>
@@ -169,10 +169,10 @@ print(response.text)</code></pre>
             <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
             <section class="col-12 col-sm-8 col-md-6">
               <p>Example Request:</p>
-              <pre class="border p-3 rounded" lang-tag="cUrl"><code class="language-bash">curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET "http://127.0.0.1:8000/api/ages/"</code></pre>
+              <pre class="border p-3 rounded" lang-tag="cUrl"><code class="language-bash">curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET "https://django-poetry.herokuapp.com/api/ages/"</code></pre>
               <pre data class="border p-3 rounded" lang-tag="python"><code class="language-py">import requests
 
-url = "http://127.0.0.1:8000/api/ages/"
+url = "https://django-poetry.herokuapp.com/api/ages/"
 headers = { "Content-Type": "application/json" }
 response = requests.request("GET", url, headers=headers)
 
@@ -204,7 +204,7 @@ print(response.text)</code></pre>
             <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
             <section class="col-12 col-sm-8 col-md-6">
               <h5>Retrieve Authors</h5>
-              <pre class="border p-3 rounded"><code class="language-bash">http://127.0.0.1:8000/api/authors/?name={name}</code></pre>
+              <pre class="border p-3 rounded"><code class="language-bash">https://django-poetry.herokuapp.com/api/authors/?name={name}</code></pre>
             </section>
             <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
           </div>
@@ -233,10 +233,10 @@ print(response.text)</code></pre>
                 </tbody>
               </table>
               <p>Example Request:</p>
-              <pre class="border p-3 rounded" lang-tag="cUrl"><code class="language-bash">curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET "http://127.0.0.1:8000/api/authors/?name=John"</code></pre>
+              <pre class="border p-3 rounded" lang-tag="cUrl"><code class="language-bash">curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET "https://django-poetry.herokuapp.com/api/authors/?name=John"</code></pre>
               <pre data class="border p-3 rounded" lang-tag="python"><code class="language-py">import requests
 
-url = "http://127.0.0.1:8000/api/authors/"
+url = "https://django-poetry.herokuapp.com/api/authors/"
 headers = { "Content-Type": "application/json" }
 params = {"name": "John"}
 response = requests.request("GET", url, headers=headers, params=params)
@@ -263,7 +263,7 @@ print(response.text)</code></pre>
             <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
             <section class="col-12 col-sm-8 col-md-6">
               <h5>Retrieve Author by ID</h5>
-              <pre class="border p-3 rounded"><code class="language-bash">http://127.0.0.1:8000/api/authors/{id}</code></pre>
+              <pre class="border p-3 rounded"><code class="language-bash">https://django-poetry.herokuapp.com/api/authors/{id}</code></pre>
             </section>
             <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
           </div>
@@ -291,11 +291,11 @@ print(response.text)</code></pre>
                 </tbody>
               </table>
               <p>Example Request:</p>
-              <pre class="border p-3 rounded" lang-tag="cUrl"><code class="language-bash">curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET "http://127.0.0.1:8000/api/authors/07d8feaf-4e8b-4261-930c-afcff3d1285"</code></pre>
+              <pre class="border p-3 rounded" lang-tag="cUrl"><code class="language-bash">curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET "https://django-poetry.herokuapp.com/api/authors/07d8feaf-4e8b-4261-930c-afcff3d1285"</code></pre>
               <pre data class="border p-3 rounded" lang-tag="python"><code class="language-py">import requests
 
 author_id = "07d8feaf-4e8b-4261-930c-afcff3d1285"
-url = f"http://127.0.0.1:8000/api/authors/{author_id}"
+url = f"https://django-poetry.herokuapp.com/api/authors/{author_id}"
 headers = { "Content-Type": "application/json" }
 response = requests.request("GET", url, headers=headers)
 
@@ -325,7 +325,7 @@ print(response.text)</code></pre>
             <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
             <section class="col-12 col-sm-8 col-md-6">
               <h5>Retrieve Poems (Exact)</h5>
-              <pre class="border p-3 rounded"><code class="language-bash">http://127.0.0.1:8000/api/poems/exact/?age={age}&author={author}&by-line={by-line}&title={title}&type={type}</code></pre>
+              <pre class="border p-3 rounded"><code class="language-bash">https://django-poetry.herokuapp.com/api/poems/exact/?age={age}&author={author}&by-line={by-line}&title={title}&type={type}</code></pre>
             </section>
             <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
           </div>
@@ -397,10 +397,10 @@ print(response.text)</code></pre>
                 </tbody>
               </table>
               <p>Example Request:</p>
-              <pre class="border p-3 rounded" lang-tag="cUrl"><code class="language-bash">curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET "http://127.0.0.1:8000/api/poems/exact/?type=Love"</code></pre>
+              <pre class="border p-3 rounded" lang-tag="cUrl"><code class="language-bash">curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET "https://django-poetry.herokuapp.com/api/poems/exact/?type=Love"</code></pre>
               <pre data class="border p-3 rounded" lang-tag="python"><code class="language-py">import requests
 
-url = "http://127.0.0.1:8000/api/poems/exact/"
+url = "https://django-poetry.herokuapp.com/api/poems/exact/"
 headers = { "Content-Type": "application/json" }
 params = {"type": "Love"}
 response = requests.request("GET", url, headers=headers, params=params)
@@ -454,7 +454,7 @@ print(response.text)</code></pre>
             <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
             <section class="col-12 col-sm-8 col-md-6">
               <h5>Retrieve Poems (Like)</h5>
-              <pre class="border p-3 rounded"><code class="language-bash">http://127.0.0.1:8000/api/poems/like/?age={age}&author={author}&by-line={by-line}&title={title}&type={type}</code></pre>
+              <pre class="border p-3 rounded"><code class="language-bash">https://django-poetry.herokuapp.com/api/poems/like/?age={age}&author={author}&by-line={by-line}&title={title}&type={type}</code></pre>
             </section>
             <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
           </div>
@@ -536,10 +536,10 @@ print(response.text)</code></pre>
                 </tbody>
               </table>
               <p>Example Request:</p>
-              <pre class="border p-3 rounded" lang-tag="cUrl"><code class="language-bash">curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET "http://127.0.0.1:8000/api/poems/like/?content=love"</code></pre>
+              <pre class="border p-3 rounded" lang-tag="cUrl"><code class="language-bash">curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET "https://django-poetry.herokuapp.com/api/poems/like/?content=love"</code></pre>
               <pre data class="border p-3 rounded" lang-tag="python"><code class="language-py">import requests
 
-url = "http://127.0.0.1:8000/api/poems/like/"
+url = "https://django-poetry.herokuapp.com/api/poems/like/"
 headers = { "Content-Type": "application/json" }
 params = {"content": "love"}
 response = requests.request("GET", url, headers=headers, params=params)
@@ -580,7 +580,7 @@ print(response.text)</code></pre>
             <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
             <section class="col-12 col-sm-8 col-md-6">
               <h5>Retrieve Poem by ID</h5>
-              <pre class="border p-3 rounded"><code class="language-bash">http://127.0.0.1:8000/api/poems/{id}</code></pre>
+              <pre class="border p-3 rounded"><code class="language-bash">https://django-poetry.herokuapp.com/api/poems/{id}</code></pre>
             </section>
             <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
           </div>
@@ -618,11 +618,11 @@ print(response.text)</code></pre>
                 </tbody>
               </table>
               <p>Example Request:</p>
-              <pre class="border p-3 rounded" lang-tag="cUrl"><code class="language-bash">curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET "http://127.0.0.1:8000/api/poems/78c42030-79ef-4581-b200-45d34074cf16"</code></pre>
+              <pre class="border p-3 rounded" lang-tag="cUrl"><code class="language-bash">curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET "https://django-poetry.herokuapp.com/api/poems/78c42030-79ef-4581-b200-45d34074cf16"</code></pre>
               <pre data class="border p-3 rounded" lang-tag="python"><code class="language-py">import requests
 
 author_id = "07d8feaf-4e8b-4261-930c-afcff3d1285"
-url = f"http://127.0.0.1:8000/api/poems/{poem_id}"
+url = f"https://django-poetry.herokuapp.com/api/poems/{poem_id}"
 headers = { "Content-Type": "application/json" }
 response = requests.request("GET", url, headers=headers)
 
@@ -659,7 +659,7 @@ print(response.text)</code></pre>
             <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
             <section class="col-12 col-sm-8 col-md-6">
               <h5>Retrieve Types</h5>
-              <pre class="border p-3 rounded"><code class="language-bash">http://127.0.0.1:8000/api/types/</code></pre>
+              <pre class="border p-3 rounded"><code class="language-bash">https://django-poetry.herokuapp.com/api/types/</code></pre>
             </section>
             <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
           </div>
@@ -667,10 +667,10 @@ print(response.text)</code></pre>
             <section class="d-none d-sm-block col-sm-2 col-md-3"></section>
             <section class="col-12 col-sm-8 col-md-6">
               <p>Example Request:</p>
-              <pre class="border p-3 rounded" lang-tag="cUrl"><code class="language-bash">curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET "http://127.0.0.1:8000/api/types/"</code></pre>
+              <pre class="border p-3 rounded" lang-tag="cUrl"><code class="language-bash">curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET "https://django-poetry.herokuapp.com/api/types/"</code></pre>
               <pre data class="border p-3 rounded" lang-tag="python"><code class="language-py">import requests
 
-url = "http://127.0.0.1:8000/api/types/"
+url = "https://django-poetry.herokuapp.com/api/types/"
 headers = { "Content-Type": "application/json" }
 response = requests.request("GET", url, headers=headers)
 
